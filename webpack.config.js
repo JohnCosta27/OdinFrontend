@@ -33,10 +33,11 @@ module.exports = {
 			template: './src/public/index.html',
 		}),
 		new webpack.DefinePlugin({
-			'process.env': JSON.stringify(dotenv.config().parsed)
-		 })
+			'process.env': JSON.stringify(dotenv.config().parsed),
+		}),
 	],
 	devServer: {
-		port: 4040
-	}
+		historyApiFallback: true,
+		port: 4040,
+	},
 };

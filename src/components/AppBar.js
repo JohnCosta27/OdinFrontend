@@ -6,6 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import AuthenticationButton from './AuthenticationButton';
+import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
 const AppBar = () => {
 	const useStyles = makeStyles((theme) => ({
@@ -20,7 +22,7 @@ const AppBar = () => {
 		},
 	}));
 
-    const classes = useStyles();
+	const classes = useStyles();
 
 	return (
 		<div className={classes.root}>
@@ -37,12 +39,12 @@ const AppBar = () => {
 					<Typography variant="h6" className={classes.title}>
 						Odin
 					</Typography>
+					<Button component={Link} to={'/profile'} color="inherit">Profile</Button>
 					<AuthenticationButton />
 				</Toolbar>
 			</AppBarComponent>
 		</div>
 	);
-
 };
 
 export default AppBar;
