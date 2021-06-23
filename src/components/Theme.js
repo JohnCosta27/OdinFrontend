@@ -1,5 +1,5 @@
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
-import { grey, teal } from '@material-ui/core/colors'
+import { grey, teal, red } from '@material-ui/core/colors'
 // A custom theme for this app
 let Theme = createMuiTheme({
 	palette: {
@@ -8,7 +8,7 @@ let Theme = createMuiTheme({
         },
 		secondary: {
 			main: teal[500]
-		}
+		},
 	},
 	typography: {
 		fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
@@ -22,6 +22,7 @@ let Theme = createMuiTheme({
 			xl: 1920,
 		},
 	},
+	spacing: factor => `${0.25 * factor}rem`,
 });
 
 Theme = responsiveFontSizes(Theme);
