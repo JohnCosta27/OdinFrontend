@@ -5,7 +5,8 @@ import AppBar from '../AppBar';
 import ProtectedRoute from '../../auth/protected-route';
 import Profile from '../Profile';
 import ExternalApi from '../views/ExternalAPI';
-import CreateSubject from '../CreateSubject';
+import CreateSubject from '../subjects/CreateSubject';
+import CreateSubjectPoints from '../subjects/CreateSubjectPoints';
 
 /**
  * App component
@@ -36,6 +37,7 @@ const App = () => {
 		<div id="app">
 			<AppBar />
 			<CreateSubject />
+			<CreateSubjectPoints />
 			<div>
 				<Switch>
 					<Route path="/" exact />
