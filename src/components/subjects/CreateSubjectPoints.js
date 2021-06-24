@@ -84,6 +84,7 @@ const CreateSubjectPoints = () => {
 						value={topic}
 						onChange={selectTopic}
 					>
+                        <MenuItem key={1} value={1}>+ New Topic</MenuItem>
 						{topics.map((topic) => (
 							<MenuItem key={topic.id} value={topic.id}>
 								{topic.name}
@@ -95,10 +96,18 @@ const CreateSubjectPoints = () => {
 		}
 	};
 
+    const getNewTopic = () => {
+        if (topic == 1) {
+            return (
+                <FormControl required style={{width: '100%'}}>
+                    <TextField label="New topic"></TextField>
+                </FormControl>
+            );
+        }
+    }
+
 	const getPointInput = () => {
-		if (topic == '') {
-			return <div></div>;
-		} else {
+		if (topic != '') {
 			return (
 				<FormControl
 					required
@@ -194,6 +203,7 @@ const CreateSubjectPoints = () => {
 				)}
 
 				{getTopicInput()}
+                {getNewTopic()}
                 {getPointInput()}
                 
 			</DialogStyled>

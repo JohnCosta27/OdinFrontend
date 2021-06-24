@@ -13,8 +13,8 @@ const DialogStyled = (props) => {
 		paper: {
 			minWidth: 500,
 			[theme.breakpoints.down('sm')]: {
-				minWidth: 0
-			}
+				minWidth: 0,
+			},
 		},
 		dialogWrapper: {
 			marginLeft: theme.spacing(2),
@@ -71,14 +71,23 @@ const DialogStyled = (props) => {
 						onSubmit={(event) => props.onSubmit(event)}
 						className={classes.dialogWrapper}
 					>
-						{React.Children.map(props.children, (child) => (
-							<div
-								key={counter++}
-								className={classes.formComponent}
-							>
-								{child}
-							</div>
-						))}
+						{React.Children.map(props.children, (child) => {
+							//*Dirty try catch to prevent not loaded errors
+							try {
+								if (child.type == <div></div>) {
+								} else {
+									return (
+										<div
+											key={counter++}
+											className={classes.formComponent}
+										>
+											{child}
+										</div>
+									);
+								}
+							} catch (error) {
+							}
+						})}
 						<Button
 							color="secondary"
 							className={classes.submitButton}
