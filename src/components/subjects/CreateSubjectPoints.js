@@ -20,8 +20,10 @@ const CreateSubjectPoints = () => {
 
 	const [subject, setSubject] = useState('');
 	const [topic, setTopic] = useState('');
+	const [newTopic, setNewTopic] = useState();
 
 	const [subjectLoading, setSubjectLoading] = useState(true);
+	const [error, setError] = useState(false);
 
 	useEffect(() => {
 		getSubjects();
@@ -100,7 +102,7 @@ const CreateSubjectPoints = () => {
         if (topic == 1) {
             return (
                 <FormControl required style={{width: '100%'}}>
-                    <TextField label="New topic"></TextField>
+                    <TextField label="New topic" onChange={selectNewTopic}></TextField>
                 </FormControl>
             );
         }
@@ -127,12 +129,19 @@ const CreateSubjectPoints = () => {
 	};
 
 	const selectSubject = (event) => {
+		setError(false);
 		setSubject(event.target.value);
 	};
 
 	const selectTopic = (event) => {
+		setError(false);
 		setTopic(event.target.value);
 	};
+
+	const selectNewTopic = (event) => {
+		setError(false);
+		setNewTopic(event.target.value);
+	}
 
     const submitPoints = async (event) => {
         event.preventDefault();
@@ -140,6 +149,7 @@ const CreateSubjectPoints = () => {
 		const body = {
             subject: subject,
             topic: topic,
+			newTopic: newTopic,
 			points: points
 		};
 
@@ -154,8 +164,11 @@ const CreateSubjectPoints = () => {
 		});
 		const responseData = await data.json();
 		if (responseData.error != undefined) {
+			setError(true);
 		} else {
 			setOpen(false);
+			setSubject('');
+			setTopic(0);
 		}
     }
 

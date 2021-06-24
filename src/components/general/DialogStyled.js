@@ -5,6 +5,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import Button from '@material-ui/core/Button';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import clsx from 'clsx';
 
 const DialogStyled = (props) => {
 	const theme = useTheme();
@@ -15,6 +16,11 @@ const DialogStyled = (props) => {
 			[theme.breakpoints.down('sm')]: {
 				minWidth: 0,
 			},
+		},
+		borderError: {
+			borderStyle: 'solid',
+			borderWidth: 2,
+			borderColor: theme.palette.error.main
 		},
 		dialogWrapper: {
 			marginLeft: theme.spacing(2),

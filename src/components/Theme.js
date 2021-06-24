@@ -9,6 +9,9 @@ let Theme = createMuiTheme({
 		secondary: {
 			main: teal[500]
 		},
+		error: {
+			main: red[500]
+		}
 	},
 	typography: {
 		fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
