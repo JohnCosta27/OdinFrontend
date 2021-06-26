@@ -7,6 +7,7 @@ import Profile from '../Profile';
 import ExternalApi from '../views/ExternalAPI';
 import CreateSubject from '../subjects/CreateSubject';
 import CreateSubjectPoints from '../subjects/CreateSubjectPoints';
+import Subject from '../views/Subject';
 
 /**
  * App component
@@ -38,6 +39,7 @@ const App = () => {
 			<AppBar />
 			<CreateSubject />
 			<CreateSubjectPoints />
+			<Subject />
 			<div>
 				<Switch>
 					<Route path="/" exact />
