@@ -7,106 +7,19 @@ import FormControl from '@material-ui/core/FormControl';
 import { MenuItem } from '@material-ui/core';
 import DialogStyled from '../general/DialogStyled';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import SubjectTopicPointForm from './SubjectTopicPointForm';
 
 const CreateSubjectPoints = () => {
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
 	const { getAccessTokenSilently } = useAuth0();
 
 	const [open, setOpen] = useState(false);
-	const [loading, setLoading] = useState(true);
-	const [subjects, setSubjects] = useState();
-	const [topics, setTopics] = useState();
-	const [points, setPoints] = useState();
+	const [points, setPoints] = useState([]);
 
+	//* State to be used for submit and passed down to child
 	const [subject, setSubject] = useState('');
 	const [topic, setTopic] = useState('');
 	const [newTopic, setNewTopic] = useState();
-
-	const [subjectLoading, setSubjectLoading] = useState(true);
-	const [error, setError] = useState(false);
-
-	useEffect(() => {
-		getSubjects();
-	}, []);
-
-	useEffect(() => {
-		if (subject != '') {
-			getTopics();
-		}
-	}, [subject]);
-
-	const getSubjects = async () => {
-		const token = await getAccessTokenSilently();
-		const data = await fetch(`${serverUrl}/subjects/getall`, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
-		const responseData = await data.json();
-		setSubjects(responseData);
-		setLoading(false);
-	};
-
-	const getTopics = async () => {
-		const token = await getAccessTokenSilently();
-		const data = await fetch(
-			`${serverUrl}/subjects/getalltopics?subjectid=` + subject,
-			{
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			}
-		);
-		const responseData = await data.json();
-		setTopics(responseData);
-		setSubjectLoading(false);
-	};
-
-	const getTopicInput = () => {
-		if (subject == '') {
-			return <div></div>;
-		} else if (subject != '' && subjectLoading) {
-			return (
-				<div
-					style={{
-						width: '100%',
-						display: 'flex',
-						justifyContent: 'center',
-					}}
-				>
-					<CircularProgress />
-				</div>
-			);
-		} else {
-			return (
-				<FormControl required style={{ width: '100%' }}>
-					<InputLabel id="topic-select">Topic</InputLabel>
-					<Select
-						labelId="subject-select"
-						value={topic}
-						onChange={selectTopic}
-					>
-                        <MenuItem key={1} value={1}>+ New Topic</MenuItem>
-						{topics.map((topic) => (
-							<MenuItem key={topic.id} value={topic.id}>
-								{topic.name}
-							</MenuItem>
-						))}
-					</Select>
-				</FormControl>
-			);
-		}
-	};
-
-    const getNewTopic = () => {
-        if (topic == 1) {
-            return (
-                <FormControl required style={{width: '100%'}}>
-                    <TextField label="New topic" onChange={selectNewTopic}></TextField>
-                </FormControl>
-            );
-        }
-    }
 
 	const getPointInput = () => {
 		if (topic != '') {
@@ -128,29 +41,14 @@ const CreateSubjectPoints = () => {
 		}
 	};
 
-	const selectSubject = (event) => {
-		setError(false);
-		setSubject(event.target.value);
-	};
-
-	const selectTopic = (event) => {
-		setError(false);
-		setTopic(event.target.value);
-	};
-
-	const selectNewTopic = (event) => {
-		setError(false);
-		setNewTopic(event.target.value);
-	}
-
-    const submitPoints = async (event) => {
-        event.preventDefault();
+	const submitPoints = async (event) => {
+		event.preventDefault();
 		const token = await getAccessTokenSilently();
 		const body = {
-            subject: subject,
-            topic: topic,
+			subject: subject,
+			topic: topic,
 			newTopic: newTopic,
-			points: points
+			points: points,
 		};
 
 		const data = await fetch(`${serverUrl}/subjects/createpoints`, {
@@ -170,7 +68,7 @@ const CreateSubjectPoints = () => {
 			setSubject('');
 			setTopic(0);
 		}
-    }
+	};
 
 	return (
 		<div>
@@ -182,43 +80,18 @@ const CreateSubjectPoints = () => {
 				onSubmit={submitPoints}
 				submitTitle="Create"
 			>
-				{loading ? (
-					<div
-						style={{
-							width: '100%',
-							display: 'flex',
-							justifyContent: 'center',
-						}}
-					>
-						<CircularProgress />
-					</div>
-				) : (
-					<div>
-						<FormControl required style={{ width: '100%' }}>
-							<InputLabel id="subject-select">Subject</InputLabel>
-							<Select
-								labelId="subject-select"
-								value={subject}
-								onChange={selectSubject}
-							>
-								{subjects.map((subject) => (
-									<MenuItem
-										key={subject.id}
-										value={subject.id}
-									>
-										{subject.level} - {subject.name} (
-										{subject.examboard})
-									</MenuItem>
-								))}
-							</Select>
-						</FormControl>
-					</div>
-				)}
-
-				{getTopicInput()}
-                {getNewTopic()}
-                {getPointInput()}
-                
+				<SubjectTopicPointForm
+					state={{
+						subject: subject,
+						setSubject: setSubject,
+						topic: topic,
+						setTopic: setTopic,
+						newTopic: newTopic,
+						setNewTopic: setNewTopic,
+					}}
+					newTopic={true}
+				/>
+				{getPointInput()}
 			</DialogStyled>
 		</div>
 	);

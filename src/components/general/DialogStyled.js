@@ -30,14 +30,10 @@ const DialogStyled = (props) => {
 			display: 'flex',
 			flexDirection: 'column',
 		},
-		formComponent: {
-			marginBottom: theme.spacing(5),
-			marginTop: theme.spacing(5),
-			width: '100%',
-		},
 		submitButton: {
 			width: '100%',
 			marginBottom: theme.spacing(2),
+			marginTop: theme.spacing(5)
 		},
 		title: {
 			paddingTop: theme.spacing(5),
@@ -85,7 +81,6 @@ const DialogStyled = (props) => {
 									return (
 										<div
 											key={counter++}
-											className={classes.formComponent}
 										>
 											{child}
 										</div>
