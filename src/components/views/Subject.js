@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import TopicTable from '../TopicTable';
+import Typography from '@material-ui/core/Typography';
 
 const Subject = () => {
-
-    const [subject, setSubject] = useState();
-    const [loading, setLoading] = useState(false);
+	const [topics, setTopics] = useState();
+	const [loading, setLoading] = useState(true);
 
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
 	const { getAccessTokenSilently } = useAuth0();
@@ -33,18 +27,34 @@ const Subject = () => {
 			}
 		);
 		const responseData = await data.json();
-		setSubject(responseData[0]);
+		setTopics(responseData);
 		setLoading(false);
 	};
 
-    if (loading) {
-        return (
-            <CircularProgress />
-        )
-    } else {
-
-    }
-
+	if (loading) {
+		return (
+			<div>
+				<CircularProgress />
+			</div>
+		);
+	} else {
+		return (
+			<div>
+				<Typography variant="h2" align="center">
+					{topics[0].subjects.level} {topics[0].subjects.name} (
+					{topics[0].subjects.examboard})
+				</Typography>
+				{topics.map((topic) => (
+					<div key={topic.id}>
+						<TopicTable rows={topic} />
+						<br></br>
+						<br></br>
+						<br></br>
+					</div>
+				))}
+			</div>
+		);
+	}
 };
 
 export default Subject;

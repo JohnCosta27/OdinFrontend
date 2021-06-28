@@ -33,9 +33,8 @@ const App = () => {
 			});
 		} catch (error) {}
 	};
-
 	return (
-		<div id="app">
+		<div>
 			<AppBar />
 			<CreateSubject />
 			<CreateSubjectPoints />

@@ -11,7 +11,7 @@ let Theme = createMuiTheme({
 		},
 		error: {
 			main: red[500]
-		}
+		},
 	},
 	typography: {
 		fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
@@ -26,6 +26,15 @@ let Theme = createMuiTheme({
 		},
 	},
 	spacing: factor => `${0.25 * factor}rem`,
+	overrides: {
+		MuiCssBaseline: {
+			'@global': {
+				html: {
+					backgroundColor: '#FAFAFA'
+				}
+			}
+		}
+	}
 });
 
 Theme = responsiveFontSizes(Theme);

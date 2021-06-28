@@ -5,10 +5,12 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Auth0ProviderWithHistory from '../auth/auth0-provider-with-history';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Theme from '../components/Theme';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import "./index.css";
 
 ReactDOM.render(
 	<ThemeProvider theme={Theme}>
+		<CssBaseline />
 		<Router>
 			<Auth0ProviderWithHistory>
 				<App />
