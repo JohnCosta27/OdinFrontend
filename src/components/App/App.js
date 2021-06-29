@@ -9,6 +9,7 @@ import CreateSubject from '../subjects/CreateSubject';
 import CreateSubjectPoints from '../subjects/CreateSubjectPoints';
 import Subject from '../views/Subject';
 import AddProgress from '../progress/AddProgress';
+import StudentDashboard from '../views/StudentDashboard';
 
 /**
  * App component
@@ -37,13 +38,10 @@ const App = () => {
 	return (
 		<div>
 			<AppBar />
-			<CreateSubject />
-			<CreateSubjectPoints />
-			<AddProgress />
-			<Subject />
 			<div>
 				<Switch>
 					<Route path="/" exact />
+					<ProtectedRoute path="/dashboard" component={StudentDashboard} />
 					<ProtectedRoute path="/profile" component={Profile} />
 					<ProtectedRoute
 						path="/external-api"
