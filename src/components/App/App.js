@@ -8,6 +8,7 @@ import ExternalApi from '../views/ExternalAPI';
 import CreateSubject from '../subjects/CreateSubject';
 import CreateSubjectPoints from '../subjects/CreateSubjectPoints';
 import Subject from '../views/Subject';
+import AddProgress from '../progress/AddProgress';
 
 /**
  * App component
@@ -38,6 +39,7 @@ const App = () => {
 			<AppBar />
 			<CreateSubject />
 			<CreateSubjectPoints />
+			<AddProgress />
 			<Subject />
 			<div>
 				<Switch>
