@@ -6,6 +6,8 @@ import ContentCard from '../general/ContentCard';
 import Divider from '@material-ui/core/Divider';
 import file from '../../SmallBanner.jpeg';
 import FileUpload from '../general/FileUpload';
+import ContentNotes from '../general/ContentNotes';
+import { makeStyles } from '@material-ui/core/styles';
 
 const Point = () => {
 	const [point, setPoint] = useState();
@@ -18,6 +20,16 @@ const Point = () => {
 	useEffect(() => {
 		getPoint();
 	}, []);
+
+	const useStyles = makeStyles((theme) => ({
+		root: {
+			width: '100%',
+			display: 'flex',
+			flexDirection: 'column',
+			justifyContent: 'center',
+			alignItems: 'center'
+		}
+	}));
 
 	const getPoint = async () => {
 		const token = await getAccessTokenSilently();
@@ -35,27 +47,17 @@ const Point = () => {
 			document.location.href = '/';
 		}
 
-       /* let body = new FormData();
-        body.append('note', file);
-		data = await fetch(`${serverUrl}/files/image`, {
-            method: 'POST',
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-            body: body
-		});
-        responseData = await data.json();
-        console.log(responseData);*/
-
 		setPoint(responseData[0]);
 		setLoading(false);
 	};
+
+	const classes = useStyles();
 
 	if (loading) {
 		return <CircularProgress />;
 	} else {
 		return (
-			<div>
+			<div className={classes.root}>
                 <FileUpload />
 				<ContentCard>
 					<Typography variant="h2" align="center">
@@ -66,6 +68,7 @@ const Point = () => {
 						{point.name}
 					</Typography>
 				</ContentCard>
+				<ContentNotes />
 			</div>
 		);
 	}
