@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import LatestProgress from '../general/LatestProgress';
+import ViewWrapper from '../general/ViewWrapper';
+import StudentSubjects from '../general/StudentSubjects';
 
 const StudentDashboard = () => {
 
 	return (
-		<div>
+		<ViewWrapper>
 			<LatestProgress />
-		</div>
+			<StudentSubjects />
+		</ViewWrapper>
 	);
 };
 

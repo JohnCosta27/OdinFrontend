@@ -8,6 +8,8 @@ const ContentCard = (props) => {
 			width: 800,
 			paddingLeft: theme.spacing(5),
 			paddingRight: theme.spacing(5),
+			paddingTop: theme.spacing(5),
+			paddingBottom: theme.spacing(5),
 			display: 'flex',
 			justifyContent: 'center',
 			[theme.breakpoints.down('sm')]: {

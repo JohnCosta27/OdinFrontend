@@ -4,10 +4,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import ContentCard from '../general/ContentCard';
 import Divider from '@material-ui/core/Divider';
-import file from '../../SmallBanner.jpeg';
+import ViewWrapper from '../general/ViewWrapper';
 import FileUpload from '../general/FileUpload';
 import ContentNotes from '../general/ContentNotes';
-import { makeStyles } from '@material-ui/core/styles';
 
 const Point = () => {
 	const [point, setPoint] = useState();
@@ -20,16 +19,6 @@ const Point = () => {
 	useEffect(() => {
 		getPoint();
 	}, []);
-
-	const useStyles = makeStyles((theme) => ({
-		root: {
-			width: '100%',
-			display: 'flex',
-			flexDirection: 'column',
-			justifyContent: 'center',
-			alignItems: 'center'
-		}
-	}));
 
 	const getPoint = async () => {
 		const token = await getAccessTokenSilently();
@@ -51,14 +40,11 @@ const Point = () => {
 		setLoading(false);
 	};
 
-	const classes = useStyles();
-
 	if (loading) {
 		return <CircularProgress />;
 	} else {
 		return (
-			<div className={classes.root}>
-                <FileUpload />
+			<ViewWrapper>
 				<ContentCard>
 					<Typography variant="h2" align="center">
 						{point.topics.name}
@@ -69,7 +55,7 @@ const Point = () => {
 					</Typography>
 				</ContentCard>
 				<ContentNotes />
-			</div>
+			</ViewWrapper>
 		);
 	}
 };

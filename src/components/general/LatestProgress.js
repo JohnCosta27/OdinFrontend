@@ -34,6 +34,10 @@ const LatestProgress = () => {
 		setLoading(false);
 	};
 
+	const handleClick = (pointid) => {
+		document.location.href = "/point?pointid=" + pointid;
+	}
+
 	if (loading) {
 		return (
 			<ContentCard>
@@ -47,8 +51,8 @@ const LatestProgress = () => {
 					Latest Learnt
 				</Typography>
 				{learntPoints.map((point) => (
-					<List key={point.id}>
-						<ListItem button>
+					<List key={point.points_id}>
+						<ListItem button onClick={() => handleClick(point.points_id)}>
 							<ListItemText
 								primary={
 									point.points.topics.subjects.level +

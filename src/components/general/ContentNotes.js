@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { makeStyles } from '@material-ui/core/styles';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-
+import Gallery from 'react-grid-gallery';
+import ContentCard from './ContentCard';
 const ContentNotes = () => {
 	const [notes, setNotes] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -17,9 +16,9 @@ const ContentNotes = () => {
 			display: 'flex',
 			flexDirection: 'column',
 			flexWrap: 'wrap',
-			justifyContent: 'space-around',
+			justifyContent: 'center',
 			overflow: 'hidden',
-			width: '80%',
+			width: 750,
 		},
 		imageWrapper: {
 			height: 'auto',
@@ -27,8 +26,8 @@ const ContentNotes = () => {
 		},
 		image: {
 			width: '100%',
-			height: 'auto'
-		}
+			height: 'auto',
+		},
 	}));
 
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
@@ -47,7 +46,16 @@ const ContentNotes = () => {
 			}
 		);
 		const responseData = await data.json();
-		setNotes(responseData);
+		let noteData = [];
+		for (let note of responseData) {
+			noteData.push({
+				src: `https://sbogvmcjtjrgffqnydly.supabase.co/storage/v1/object/public/notes/${note.noteid}`,
+				thumbnail: `https://sbogvmcjtjrgffqnydly.supabase.co/storage/v1/object/public/notes/${note.noteid}`,
+				thumbnailWidth: note.notes.width,
+				thumbnailHeight: note.notes.height
+			});
+		}
+		setNotes(noteData);
 		setLoading(false);
 	};
 
@@ -57,13 +65,9 @@ const ContentNotes = () => {
 		return <div></div>;
 	} else {
 		return (
-			<div className={classes.root}>
-				{notes.map((note) => (
-					<div key={note.noteid} className={classes.imageWrapper}>
-						<img src={`https://sbogvmcjtjrgffqnydly.supabase.co/storage/v1/object/public/notes/${note.noteid}`} className={classes.image} />
-					</div>
-				))}
-			</div>
+			<ContentCard>
+				<Gallery images={notes} enableImageSelection={false} rowHeight={300}/>
+			</ContentCard>
 		);
 	}
 };
