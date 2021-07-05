@@ -30,9 +30,20 @@ const LatestProgress = () => {
 		await responseData.sort((a, b) => {
 			return new Date(b.datetime) - new Date(a.datetime);
 		});
+		console.log(responseData)
 		setLearntPoints(responseData);
 		setLoading(false);
 	};
+
+	const getDateString = (dateString) => {
+		const date = new Date(dateString);
+		let dd = date.getDate();
+		let mm = date.getMonth() + 1;
+		const yyyy = date.getFullYear();
+		if (dd < 10) dd = '0' + dd
+		if (mm < 10) mm = '0' + mm
+		return (dd + "/" + mm + "/" + yyyy);
+	}
 
 	const handleClick = (pointid) => {
 		document.location.href = '/point?pointid=' + pointid;
@@ -69,6 +80,7 @@ const LatestProgress = () => {
 									}
 									secondary={point.points.name}
 								/>
+								<ListItemText align="right" primary={getDateString(point.datetime)}/>
 							</ListItem>
 							<Divider />
 						</div>

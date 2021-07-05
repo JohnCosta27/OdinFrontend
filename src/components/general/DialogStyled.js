@@ -12,6 +12,10 @@ const DialogStyled = (props) => {
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 	const useStyles = makeStyles((theme) => ({
+		root: {
+			display: 'flex',
+			justifyContent: 'center'
+		},
 		paper: {
 			minWidth: 500,
 			[theme.breakpoints.down('sm')]: {
@@ -74,7 +78,7 @@ const DialogStyled = (props) => {
 	let counter = 0;
 
 	return (
-		<div>
+		<div className={classes.root}>
 			<Button
 				variant="contained"
 				color="primary"
