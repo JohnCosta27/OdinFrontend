@@ -35,8 +35,8 @@ const LatestProgress = () => {
 	};
 
 	const handleClick = (pointid) => {
-		document.location.href = "/point?pointid=" + pointid;
-	}
+		document.location.href = '/point?pointid=' + pointid;
+	};
 
 	if (loading) {
 		return (
@@ -50,25 +50,30 @@ const LatestProgress = () => {
 				<Typography variant="h2" align="center">
 					Latest Learnt
 				</Typography>
-				{learntPoints.map((point) => (
-					<List key={point.points_id}>
-						<ListItem button onClick={() => handleClick(point.points_id)}>
-							<ListItemText
-								primary={
-									point.points.topics.subjects.level +
-									' ' +
-									point.points.topics.subjects.name +
-									' (' +
-									point.points.topics.subjects.examboard +
-									') - ' +
-									point.points.topics.name
-								}
-								secondary={point.points.name}
-							/>
-						</ListItem>
-						<Divider />
-					</List>
-				))}
+				<List>
+					{learntPoints.map((point) => (
+						<div key={point.points_id}>
+							<ListItem
+								button
+								onClick={() => handleClick(point.points_id)}
+							>
+								<ListItemText
+									primary={
+										point.points.topics.subjects.level +
+										' ' +
+										point.points.topics.subjects.name +
+										' (' +
+										point.points.topics.subjects.examboard +
+										') - ' +
+										point.points.topics.name
+									}
+									secondary={point.points.name}
+								/>
+							</ListItem>
+							<Divider />
+						</div>
+					))}
+				</List>
 			</ContentCard>
 		);
 	}

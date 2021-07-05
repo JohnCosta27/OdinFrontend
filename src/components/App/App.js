@@ -58,6 +58,7 @@ const App = () => {
 						component={StudentDashboard}
 					/>
 					<ProtectedRoute path="/profile" component={Profile} />
+					<ProtectedRoute path="/subject" component={Subject} />
 					<ProtectedRoute path="/point" component={Point} />
 					<ProtectedRoute
 						path="/external-api"

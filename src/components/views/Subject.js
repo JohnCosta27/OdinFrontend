@@ -27,6 +27,7 @@ const Subject = () => {
 			}
 		);
 		const responseData = await data.json();
+		console.log(responseData);
 		setTopics(responseData);
 		setLoading(false);
 	};

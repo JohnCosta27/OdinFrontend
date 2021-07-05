@@ -35,7 +35,22 @@ const AddSubject = () => {
 	const submit = async (event) => {
 		event.preventDefault();
 		const token = await getAccessTokenSilently();
-		//TODO
+		const body = {subjectid: selectedSubject};
+		const data = await fetch(`${serverUrl}/users/addsubject`, {
+			method: "POST",
+			headers: {
+				Authorization: `Bearer ${token}`,
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(body),
+		});
+		const responseData = await data.json();
+		const results = subjects.filter(s => {
+			return s.id != selectedSubject
+		});
+		setSubjects(results);
+		setOpen(false);
 	}
 
 	const selectSubject = (event) => {
