@@ -7,9 +7,10 @@ import Divider from '@material-ui/core/Divider';
 import ViewWrapper from '../general/ViewWrapper';
 import FileUpload from '../general/FileUpload';
 import ContentNotes from '../general/ContentNotes';
+import RevisionPoint from '../general/RevisionPoint';
 
 const Point = () => {
-	const [point, setPoint] = useState();
+	const [point, setPoint] = useState([]);
 	const [loading, setLoading] = useState(true);
 
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
@@ -23,7 +24,7 @@ const Point = () => {
 	const getPoint = async () => {
 		const token = await getAccessTokenSilently();
 		const data = await fetch(
-			`${serverUrl}/subjects/getpoint?pointid=` +
+			`${serverUrl}/subjects/getpointrevision?pointid=` +
 				urlParams.get('pointid'),
 			{
 				headers: {
@@ -32,13 +33,23 @@ const Point = () => {
 			}
 		);
 		const responseData = await data.json();
+		await responseData.sort((a, b) => {
+			return new Date(b.datetime) - new Date(a.datetime);
+		});
 		if (responseData.error != undefined) {
 			document.location.href = '/';
 		}
-
-		setPoint(responseData[0]);
+		setPoint(responseData);
 		setLoading(false);
 	};
+
+	const getDates = (point) => {
+		let dates = [];
+		for (let p of point) {
+			dates.push(p.datetime);
+		}
+		return dates;
+	}
 
 	if (loading) {
 		return <CircularProgress />;
@@ -47,13 +58,18 @@ const Point = () => {
 			<ViewWrapper>
 				<ContentCard>
 					<Typography variant="h2" align="center">
-						{point.topics.name}
+						{point[0].topicname}
 					</Typography>
 					<Divider />
 					<Typography variant="h4" align="center">
-						{point.name}
+						{point[0].pointname}
 					</Typography>
 				</ContentCard>
+				<RevisionPoint
+					timesRevised={point.length}
+					lastRevised={point[0].datetime}
+					dates={getDates(point)}
+				/>
 				<ContentNotes />
 			</ViewWrapper>
 		);

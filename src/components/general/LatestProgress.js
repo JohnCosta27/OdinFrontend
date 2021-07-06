@@ -30,7 +30,6 @@ const LatestProgress = () => {
 		await responseData.sort((a, b) => {
 			return new Date(b.datetime) - new Date(a.datetime);
 		});
-		console.log(responseData)
 		setLearntPoints(responseData);
 		setLoading(false);
 	};

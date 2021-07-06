@@ -61,7 +61,7 @@ const ContentNotes = () => {
 
 	const classes = useStyles();
 
-	if (loading) {
+	if (loading || notes.length == 0) {
 		return <div></div>;
 	} else {
 		return (

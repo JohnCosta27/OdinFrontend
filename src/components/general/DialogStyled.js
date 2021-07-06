@@ -81,7 +81,7 @@ const DialogStyled = (props) => {
 		<div className={classes.root}>
 			<Button
 				variant="contained"
-				color="primary"
+				color="secondary"
 				onClick={handleClickOpen}
 			>
 				{props.buttonTitle}
