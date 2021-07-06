@@ -5,8 +5,9 @@ import TopicTable from '../TopicTable';
 import Typography from '@material-ui/core/Typography';
 
 const Subject = () => {
-	const [topics, setTopics] = useState();
+	const [topics, setTopics] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const [pointsProgress, setPointsProgress] = useState([]);
 
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
 	const { getAccessTokenSilently } = useAuth0();
@@ -14,6 +15,7 @@ const Subject = () => {
 
 	useEffect(() => {
 		getSubject();
+		getPointsProgress();
 	}, []);
 
 	const getSubject = async () => {
@@ -31,6 +33,39 @@ const Subject = () => {
 		setLoading(false);
 	};
 
+	const getPointsProgress = async () => {
+		const token = await getAccessTokenSilently();
+		const data = await fetch(
+			`${serverUrl}/progress/getprogressinsubject?subjectid=` +
+				urlParams.get('subjectid'),
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}
+		);
+		const responseData = await data.json();
+		setPointsProgress(responseData);
+	};
+
+	const topicTables = (topic) => {
+		for (let progress of pointsProgress) {
+			if (progress.topicid == topic.id) {
+				return (
+					<div key={topic.id}>
+						<TopicTable rows={topic} progress={progress} />
+					</div>
+				);
+			}
+		}
+
+		return (
+			<div key={topic.id}>
+				<TopicTable rows={topic} />
+			</div>
+		);
+	};
+
 	if (loading) {
 		return (
 			<div>
@@ -44,14 +79,7 @@ const Subject = () => {
 					{topics[0].subjects.level} {topics[0].subjects.name} (
 					{topics[0].subjects.examboard})
 				</Typography>
-				{topics.map((topic) => (
-					<div key={topic.id}>
-						<TopicTable rows={topic} />
-						<br></br>
-						<br></br>
-						<br></br>
-					</div>
-				))}
+				{topics.map((topic) => topicTables(topic))}
 			</div>
 		);
 	}

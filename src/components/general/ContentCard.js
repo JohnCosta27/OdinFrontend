@@ -22,9 +22,6 @@ const ContentCard = (props) => {
 			paddingRight: theme.spacing(2),
 			paddingTop: theme.spacing(2),
 			paddingBottom: theme.spacing(2),
-			display: 'flex',
-			flexDirection: 'column',
-			alignItems: 'center'
 		},
 	}));
 

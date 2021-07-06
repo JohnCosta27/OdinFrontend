@@ -27,10 +27,14 @@ const LatestProgress = () => {
 			},
 		});
 		const responseData = await data.json();
-		await responseData.sort((a, b) => {
+		let results = await responseData.sort((a, b) => {
 			return new Date(b.datetime) - new Date(a.datetime);
 		});
-		setLearntPoints(responseData);
+		if (responseData.length > 5) {
+			setLearntPoints(results.slice(0, 5));
+		} else {
+			setLearntPoints(results);
+		}
 		setLoading(false);
 	};
 
@@ -62,7 +66,7 @@ const LatestProgress = () => {
 				</Typography>
 				<List>
 					{learntPoints.map((point) => (
-						<div key={point.points_id}>
+						<div key={point.id}>
 							<ListItem
 								button
 								onClick={() => handleClick(point.points_id)}

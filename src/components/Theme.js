@@ -1,5 +1,5 @@
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
-import { grey, teal, red } from '@material-ui/core/colors'
+import { grey, teal, red, orange, green } from '@material-ui/core/colors'
 // A custom theme for this app
 let Theme = createMuiTheme({
 	palette: {
@@ -12,6 +12,10 @@ let Theme = createMuiTheme({
 		error: {
 			main: red[500]
 		},
+		highlight: {
+			main: green[200],
+			needsRevision: orange[200]
+		}
 	},
 	typography: {
 		fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,

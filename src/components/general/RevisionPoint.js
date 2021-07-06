@@ -24,12 +24,19 @@ const RevisionPoint = (props) => {
 	const [lastRevised, setLastRevised] = useState(props.lastRevised);
 
 	const useStyles = makeStyles((theme) => ({
+		root: {
+			display: 'flex',
+			flexDirection: 'column',
+			alignItems: 'center'
+		},
 		revisionStatsWrapper: {
 			display: 'flex',
 			flexDirection: 'column',
 			width: '80%',
+			marginLeft: '10%',
 			[theme.breakpoints.down('sm')]: {
 				width: '100%',
+				marginLeft: 0
 			},
 		},
 		revisionStat: {
@@ -41,6 +48,7 @@ const RevisionPoint = (props) => {
 		},
 		buttonWrapper: {
 			display: 'flex',
+			justifyContent: 'center'
 		},
 		button: {
 			marginLeft: theme.spacing(2),
@@ -87,7 +95,7 @@ const RevisionPoint = (props) => {
 	const classes = useStyles();
 
 	return (
-		<ContentCard>
+		<ContentCard className={classes.root}>
 			<Typography variant="h2" align="center">
 				Revision
 			</Typography>
