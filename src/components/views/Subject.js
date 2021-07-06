@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import { useAuth0 } from '@auth0/auth0-react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TopicTable from '../TopicTable';
@@ -12,6 +13,15 @@ const Subject = () => {
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
 	const { getAccessTokenSilently } = useAuth0();
 	const urlParams = new URLSearchParams(window.location.search);
+
+	const useStyles = makeStyles((theme) => ({
+		root: {
+			width: 1000,
+			[theme.breakpoints.down('sm')]: {
+				width: '100%'
+			}
+		}
+	}));
 
 	useEffect(() => {
 		getSubject();
@@ -66,6 +76,8 @@ const Subject = () => {
 		);
 	};
 
+	const classes = useStyles();
+
 	if (loading) {
 		return (
 			<div>
@@ -74,7 +86,7 @@ const Subject = () => {
 		);
 	} else {
 		return (
-			<div>
+			<div className={classes.root}>
 				<Typography variant="h2" align="center">
 					{topics[0].subjects.level} {topics[0].subjects.name} (
 					{topics[0].subjects.examboard})

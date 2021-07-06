@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import ContentCard from './ContentCard';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
 import DialogStyled from './DialogStyled';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -22,12 +21,13 @@ const RevisionPoint = (props) => {
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const [timesRevised, setTimesRevised] = useState(props.timesRevised);
 	const [lastRevised, setLastRevised] = useState(props.lastRevised);
+	const [dates, setDates] = useState(props.dates)
 
 	const useStyles = makeStyles((theme) => ({
 		root: {
 			display: 'flex',
 			flexDirection: 'column',
-			alignItems: 'center'
+			alignItems: 'center',
 		},
 		revisionStatsWrapper: {
 			display: 'flex',
@@ -36,7 +36,7 @@ const RevisionPoint = (props) => {
 			marginLeft: '10%',
 			[theme.breakpoints.down('sm')]: {
 				width: '100%',
-				marginLeft: 0
+				marginLeft: 0,
 			},
 		},
 		revisionStat: {
@@ -48,7 +48,7 @@ const RevisionPoint = (props) => {
 		},
 		buttonWrapper: {
 			display: 'flex',
-			justifyContent: 'center'
+			justifyContent: 'center',
 		},
 		button: {
 			marginLeft: theme.spacing(2),
@@ -67,7 +67,7 @@ const RevisionPoint = (props) => {
 	};
 
 	const submitRevision = async (event) => {
-        event.preventDefault();
+		event.preventDefault();
 		const token = await getAccessTokenSilently();
 		const body = {
 			points_id: urlParams.get('pointid'),
@@ -76,16 +76,15 @@ const RevisionPoint = (props) => {
 		const data = await fetch(`${serverUrl}/progress/addsingular`, {
 			method: 'POST',
 			headers: {
-                Authorization: `Bearer ${token}`,
+				Authorization: `Bearer ${token}`,
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
-            body: JSON.stringify(body)
+			body: JSON.stringify(body),
 		});
 		const responseData = await data.json();
 		setTimesRevised(timesRevised + 1);
-		
-		if (new Date(selectedDate) > new Date(lastRevised)) {
+		if (new Date(selectedDate) > new Date(lastRevised) || lastRevised == undefined) {
 			setLastRevised(new Date(selectedDate));
 		}
 
@@ -93,6 +92,47 @@ const RevisionPoint = (props) => {
 	};
 
 	const classes = useStyles();
+
+	const getLastRevised = () => {
+		if (lastRevised != undefined) {
+			return (
+				<div className={classes.revisionStat}>
+					<Typography variant="h5" align="center">
+						Last Revised
+					</Typography>
+					<Typography variant="h6">
+						{getDateString(lastRevised)}
+					</Typography>
+				</div>
+			);
+		}
+	};
+
+	const getRevisionDates = () => {
+		if (dates != undefined) {
+			return (
+				<div className={classes.button}>
+					<DialogStyled
+						buttonTitle="View Dates"
+						open={open}
+						setOpen={setOpen}
+						title="Point Revision Dates"
+					>
+						<List>
+							{props.dates.map((date) => (
+								<ListItem button key={date}>
+									<ListItemText
+										primary={getDateString(date)}
+										align="center"
+									/>
+								</ListItem>
+							))}
+						</List>
+					</DialogStyled>
+				</div>
+			);
+		}
+	};
 
 	return (
 		<ContentCard className={classes.root}>
@@ -107,14 +147,7 @@ const RevisionPoint = (props) => {
 					</Typography>
 					<Typography variant="h6">{timesRevised}</Typography>
 				</div>
-				<div className={classes.revisionStat}>
-					<Typography variant="h5" align="center">
-						Last Revised
-					</Typography>
-					<Typography variant="h6">
-						{getDateString(lastRevised)}
-					</Typography>
-				</div>
+				{getLastRevised()}
 			</div>
 			<div className={classes.buttonWrapper}>
 				<div className={classes.button}>
@@ -137,25 +170,7 @@ const RevisionPoint = (props) => {
 						</MuiPickersUtilsProvider>
 					</DialogStyled>
 				</div>
-				<div className={classes.button}>
-					<DialogStyled
-						buttonTitle="View Dates"
-						open={open}
-						setOpen={setOpen}
-						title="Point Revision Dates"
-					>
-						<List>
-							{props.dates.map((date) => (
-								<ListItem button key={date}>
-									<ListItemText
-										primary={getDateString(date)}
-										align="center"
-									/>
-								</ListItem>
-							))}
-						</List>
-					</DialogStyled>
-				</div>
+				{getRevisionDates()}
 			</div>
 		</ContentCard>
 	);

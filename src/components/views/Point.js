@@ -10,8 +10,10 @@ import ContentNotes from '../general/ContentNotes';
 import RevisionPoint from '../general/RevisionPoint';
 
 const Point = () => {
+	const [loading1, setLoading1] = useState(true);
+	const [loading2, setLoading2] = useState(true);
 	const [point, setPoint] = useState([]);
-	const [loading, setLoading] = useState(true);
+	const [pointRevision, setPointRevision] = useState([]);
 
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
 	const { getAccessTokenSilently } = useAuth0();
@@ -19,9 +21,26 @@ const Point = () => {
 
 	useEffect(() => {
 		getPoint();
+		getPointRevision();
 	}, []);
 
 	const getPoint = async () => {
+		const token = await getAccessTokenSilently();
+		const data = await fetch(
+			`${serverUrl}/subjects/getpoint?pointid=` +
+				urlParams.get('pointid'),
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}
+		);
+		const responseData = await data.json();
+		setPoint(responseData);
+		setLoading1(false);
+	}
+
+	const getPointRevision = async () => {
 		const token = await getAccessTokenSilently();
 		const data = await fetch(
 			`${serverUrl}/subjects/getpointrevision?pointid=` +
@@ -39,8 +58,8 @@ const Point = () => {
 		if (responseData.error != undefined) {
 			document.location.href = '/';
 		}
-		setPoint(responseData);
-		setLoading(false);
+		setPointRevision(responseData);
+		setLoading2(false);
 	};
 
 	const getDates = (point) => {
@@ -51,25 +70,39 @@ const Point = () => {
 		return dates;
 	}
 
-	if (loading) {
+	const getRevisionPoint = () => {
+		if (pointRevision.length == 0) {
+			return (
+				<RevisionPoint
+				timesRevised={0}
+			/>
+			)
+		} else {
+			return (
+				<RevisionPoint
+				timesRevised={pointRevision.length}
+				lastRevised={pointRevision[0].datetime}
+				dates={getDates(pointRevision)}
+			/>	
+			);
+		}
+	}
+
+	if (loading1 || loading2) {
 		return <CircularProgress />;
 	} else {
 		return (
 			<ViewWrapper>
 				<ContentCard>
 					<Typography variant="h2" align="center">
-						{point[0].topicname}
+						{point[0].topics.name}
 					</Typography>
 					<Divider />
 					<Typography variant="h4" align="center">
-						{point[0].pointname}
+						{point[0].name}
 					</Typography>
 				</ContentCard>
-				<RevisionPoint
-					timesRevised={point.length}
-					lastRevised={point[0].datetime}
-					dates={getDates(point)}
-				/>
+				{getRevisionPoint()}
 				<ContentNotes />
 			</ViewWrapper>
 		);
