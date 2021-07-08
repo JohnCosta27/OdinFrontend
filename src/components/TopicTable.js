@@ -31,7 +31,7 @@ const TopicTable = (props) => {
 	const getPointRow = (point) => {
 		if (props.progress == undefined) {
 			return (
-				<div className={classes.highlightedPoint} key={point.id}>
+				<div key={point.id}>
 					<ListItem button onClick={() => buttonClick(point.id)}>
 						<ListItemText
 							primary={point.id}
@@ -69,7 +69,7 @@ const TopicTable = (props) => {
 
 	return (
 		<div className={classes.tableWrapper}>
-			<Paper className={classes.table}>
+			<Paper className={classes.table} elevation={4}>
 				<List>
 					<ListItem>
 						<Typography variant="h5" color="initial">

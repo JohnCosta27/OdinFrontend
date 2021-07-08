@@ -36,15 +36,31 @@ const SubjectTopicPointForm = (props) => {
 	}));
 
 	const getSubjects = async () => {
-		const token = await getAccessTokenSilently();
-		const data = await fetch(`${serverUrl}/subjects/getall`, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
-		const responseData = await data.json();
-		setSubjects(responseData);
-		setLoading(false);
+		if (props.studentSubjects) {
+			const token = await getAccessTokenSilently();
+			const data = await fetch(`${serverUrl}/subjects/getusersubjects`, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
+			const responseData = await data.json();
+			let subjectData = [];
+			for (let s of responseData) {
+				subjectData.push(s.subjects);
+			}
+			setSubjects(subjectData);
+			setLoading(false);
+		} else {
+			const token = await getAccessTokenSilently();
+			const data = await fetch(`${serverUrl}/subjects/getall`, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
+			const responseData = await data.json();
+			setSubjects(responseData);
+			setLoading(false);
+		}
 	};
 
 	const getTopics = async () => {
