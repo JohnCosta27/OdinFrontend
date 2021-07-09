@@ -39,7 +39,6 @@ const AppBar = () => {
 					<Typography variant="h6" className={classes.title}>
 						Odin
 					</Typography>
-					<Button component={Link} to={'/profile'} color="inherit">Profile</Button>
 					<AuthenticationButton />
 				</Toolbar>
 			</AppBarComponent>

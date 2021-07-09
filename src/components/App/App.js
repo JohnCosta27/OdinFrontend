@@ -1,4 +1,4 @@
-import React, { useEffect, userEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,6 +12,7 @@ import Subject from '../views/Subject';
 import AddProgress from '../progress/AddProgress';
 import StudentDashboard from '../views/StudentDashboard';
 import Point from '../views/Point';
+import Admin from '../views/Admin';
 
 /**
  * App component
@@ -19,6 +20,7 @@ import Point from '../views/Point';
  */
 
 const App = () => {
+
 	useEffect(() => {
 		sync();
 	}, []);
@@ -37,15 +39,14 @@ const App = () => {
 	const { getAccessTokenSilently } = useAuth0();
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
 
-	const sync = async () => {
-		try {
-			const token = await getAccessTokenSilently();
-			await fetch(`${serverUrl}/api/sync`, {
+	const sync = () => {
+		getAccessTokenSilently().then((token) => {
+			fetch(`${serverUrl}/api/sync`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
 			});
-		} catch (error) {}
+		});
 	};
 	return (
 		<div>
@@ -57,13 +58,13 @@ const App = () => {
 						path="/dashboard"
 						component={StudentDashboard}
 					/>
-					<ProtectedRoute path="/profile" component={Profile} />
 					<ProtectedRoute path="/subject" component={Subject} />
 					<ProtectedRoute path="/point" component={Point} />
 					<ProtectedRoute
 						path="/external-api"
 						component={ExternalApi}
 					/>
+					<ProtectedRoute path="/admin" component={Admin} />
 				</Switch>
 			</div>
 		</div>
