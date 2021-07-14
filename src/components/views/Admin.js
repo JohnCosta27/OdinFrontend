@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import jwtDecode from 'jwt-decode';
 import { useAuth0 } from '@auth0/auth0-react';
+import ViewWrapper from '../general/ViewWrapper';
+import CreateSubject from '../subjects/CreateSubject';
+import CreateSubjectPoints from '../subjects/CreateSubjectPoints'
 
 const Admin = () => {
 	const { getAccessTokenSilently } = useAuth0();
@@ -25,7 +28,12 @@ const Admin = () => {
 	if (!allowed) {
 		return null;
 	} else {
-		return <div>Hello Admin</div>;
+		return (
+			<ViewWrapper>
+				<CreateSubject />
+				<CreateSubjectPoints />
+			</ViewWrapper>
+		);
 	}
 };
 export default Admin;

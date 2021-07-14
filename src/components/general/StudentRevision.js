@@ -9,8 +9,13 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import DialogStyled from './DialogStyled';
 import SubjectTopicPointForm from '../subjects/SubjectTopicPointForm';
+import CalendarHeatmap from 'react-calendar-heatmap';
+import ReactTooltip from 'react-tooltip';
+import 'react-calendar-heatmap/dist/styles.css';
+import '../styles.css';
 
-const StudentRevision = () => {
+const StudentRevision = (props) => {
+	console.log(props);
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
 	const { getAccessTokenSilently } = useAuth0();
 
@@ -43,14 +48,11 @@ const StudentRevision = () => {
 
 	const getPoints = async () => {
 		const token = await getAccessTokenSilently();
-		const data = await fetch(
-			`${serverUrl}/subjects/getpoints?topicid=` + topic,
-			{
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			}
-		);
+		const data = await fetch(`${serverUrl}/subjects/getpoints?topicid=` + topic, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
 		const responseData = await data.json();
 		setPoints(responseData);
 	};
@@ -79,6 +81,7 @@ const StudentRevision = () => {
 		if (responseData.error != undefined) {
 		} else {
 			setOpenRevision(false);
+			props.setNewRevised(true);
 		}
 	};
 
@@ -87,12 +90,7 @@ const StudentRevision = () => {
 			return (
 				<FormControl required style={{ width: '100%' }}>
 					<InputLabel id="topic-select">Points</InputLabel>
-					<Select
-						labelId="topic-select"
-						value={selectedPoints}
-						onChange={handlePointSelect}
-						multiple
-					>
+					<Select labelId="topic-select" value={selectedPoints} onChange={handlePointSelect} multiple>
 						{points.map((points) => (
 							<MenuItem key={points.id} value={points.id}>
 								{points.name}
@@ -104,13 +102,78 @@ const StudentRevision = () => {
 		}
 	};
 
+	const getDateValues = () => {
+		let dates = [];
+		console.log(props.points);
+		for (let d of props.points) {
+			let found = false;
+			for (let existingDates of dates) {
+				if (
+					existingDates.date.getMonth() == new Date(d.datetime).getMonth() &&
+					existingDates.date.getDay() == new Date(d.datetime).getDay()
+				) {
+					existingDates.count++;
+					found = true;
+					break;
+				}
+			}
+
+			if (!found) {
+				dates.push({ date: new Date(d.datetime), count: 1 });
+			}
+		}
+		console.log(dates);
+		return dates;
+	};
+
+	const getDateString = (dateString) => {
+		const date = new Date(dateString);
+		let dd = date.getDate();
+		let mm = date.getMonth() + 1;
+		const yyyy = date.getFullYear();
+		if (dd < 10) dd = '0' + dd;
+		if (mm < 10) mm = '0' + mm;
+		return dd + '/' + mm + '/' + yyyy;
+	};
+
 	const classes = useStyles();
+
+	let startDate = new Date();
+	startDate.setMonth(startDate.getMonth() - 3);
 
 	return (
 		<ContentCard>
 			<Typography variant="h2" align="center">
 				Revision
 			</Typography>
+			<div className="ticket-history-wrapper">
+				<div className="ticket-history-month">
+					<CalendarHeatmap
+						startDate={startDate}
+						endDate={new Date()}
+						values={getDateValues()}
+						gutterSize={1}
+						showWeekdayLabels
+						classForValue={(value) => {
+							if (!value) {
+								return 'color-empty';
+							} else if (value <= 4) {
+								return `color-github-${value.count}`;
+							} else {
+								return `color-github-4`;
+							}
+						}}
+						tooltipDataAttrs={(value) => {
+							if (value.date != null) {
+								return {
+									'data-tip': `At ${getDateString(value.date)} you revised ${value.count} points`,
+								};
+							}
+						}}
+					/>
+					<ReactTooltip />
+				</div>
+			</div>
 			<div className={classes.buttonWrapper}>
 				<div className={classes.button}>
 					<DialogStyled

@@ -28,6 +28,7 @@ const RevisionPoint = (props) => {
 			display: 'flex',
 			flexDirection: 'column',
 			alignItems: 'center',
+			width: '100%'
 		},
 		revisionStatsWrapper: {
 			display: 'flex',

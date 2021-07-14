@@ -8,6 +8,8 @@ import ViewWrapper from '../general/ViewWrapper';
 import FileUpload from '../general/FileUpload';
 import ContentNotes from '../general/ContentNotes';
 import RevisionPoint from '../general/RevisionPoint';
+import GridItem from '../general/GridItem';
+import Grid from '@material-ui/core/Grid';
 
 const Point = () => {
 	const [loading1, setLoading1] = useState(true);
@@ -26,31 +28,23 @@ const Point = () => {
 
 	const getPoint = async () => {
 		const token = await getAccessTokenSilently();
-		const data = await fetch(
-			`${serverUrl}/subjects/getpoint?pointid=` +
-				urlParams.get('pointid'),
-			{
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			}
-		);
+		const data = await fetch(`${serverUrl}/subjects/getpoint?pointid=` + urlParams.get('pointid'), {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
 		const responseData = await data.json();
 		setPoint(responseData);
 		setLoading1(false);
-	}
+	};
 
 	const getPointRevision = async () => {
 		const token = await getAccessTokenSilently();
-		const data = await fetch(
-			`${serverUrl}/subjects/getpointrevision?pointid=` +
-				urlParams.get('pointid'),
-			{
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			}
-		);
+		const data = await fetch(`${serverUrl}/subjects/getpointrevision?pointid=` + urlParams.get('pointid'), {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
 		const responseData = await data.json();
 		await responseData.sort((a, b) => {
 			return new Date(b.datetime) - new Date(a.datetime);
@@ -68,42 +62,50 @@ const Point = () => {
 			dates.push(p.datetime);
 		}
 		return dates;
-	}
+	};
 
 	const getRevisionPoint = () => {
 		if (pointRevision.length == 0) {
 			return (
-				<RevisionPoint
-				timesRevised={0}
-			/>
-			)
+				<GridItem md={6} xs={12}>
+					<RevisionPoint timesRevised={0} />
+				</GridItem>
+			);
 		} else {
 			return (
-				<RevisionPoint
-				timesRevised={pointRevision.length}
-				lastRevised={pointRevision[0].datetime}
-				dates={getDates(pointRevision)}
-			/>	
+				<GridItem md={6} xs={12}>
+					<RevisionPoint
+						timesRevised={pointRevision.length}
+						lastRevised={pointRevision[0].datetime}
+						dates={getDates(pointRevision)}
+					/>
+				</GridItem>
 			);
 		}
-	}
+	};
 
 	if (loading1 || loading2) {
 		return <CircularProgress />;
 	} else {
 		return (
 			<ViewWrapper>
-				<ContentCard>
-					<Typography variant="h2" align="center">
-						{point[0].topics.name}
-					</Typography>
-					<Divider />
-					<Typography variant="h4" align="center">
-						{point[0].name}
-					</Typography>
-				</ContentCard>
+				<Grid container spacing={3}>
+				<GridItem md={6} xs={12}>
+					<ContentCard>
+						<Typography variant="h2" align="center">
+							{point[0].topics.name}
+						</Typography>
+						<Divider />
+						<Typography variant="h4" align="center">
+							{point[0].name}
+						</Typography>
+					</ContentCard>
+				</GridItem>
 				{getRevisionPoint()}
-				<ContentNotes />
+				<GridItem lg={12} md={12} xs={12}>
+					<ContentNotes />
+				</GridItem>
+				</Grid>
 			</ViewWrapper>
 		);
 	}

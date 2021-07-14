@@ -33,10 +33,7 @@ const TopicTable = (props) => {
 			return (
 				<div key={point.id}>
 					<ListItem button onClick={() => buttonClick(point.id)}>
-						<ListItemText
-							primary={point.id}
-							secondary={point.name}
-						/>
+						<ListItemText primary={point.name} />
 					</ListItem>
 				</div>
 			);
@@ -44,15 +41,15 @@ const TopicTable = (props) => {
 			for (let p of props.progress.points) {
 				if (p.pointid == point.id) {
 					return (
-						<div className={classes.highlightedPoint} key={point.id}>
+						<div
+							className={classes.highlightedPoint}
+							key={point.id}
+						>
 							<ListItem
 								button
 								onClick={() => buttonClick(point.id)}
 							>
-								<ListItemText
-									primary={point.id}
-									secondary={point.name}
-								/>
+								<ListItemText primary={point.name} />
 							</ListItem>
 						</div>
 					);
@@ -62,8 +59,8 @@ const TopicTable = (props) => {
 	};
 
 	const buttonClick = (id) => {
-		document.location.href = "/point?pointid=" + id;
-	}
+		document.location.href = '/point?pointid=' + id;
+	};
 
 	const classes = useStyles();
 
