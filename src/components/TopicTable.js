@@ -7,6 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 
 const TopicTable = (props) => {
+
 	const useStyles = makeStyles((theme) => ({
 		tableWrapper: {
 			display: 'flex',
@@ -30,25 +31,21 @@ const TopicTable = (props) => {
 
 	const getPointRow = (point) => {
 		if (props.progress == undefined) {
-			return (
-				<div key={point.id}>
-					<ListItem button onClick={() => buttonClick(point.id)}>
-						<ListItemText primary={point.name} />
-					</ListItem>
-				</div>
-			);
+			if (!props.showProgressOnly) {
+				return (
+					<div key={point.id}>
+						<ListItem button onClick={() => buttonClick(point.id)}>
+							<ListItemText primary={point.name} />
+						</ListItem>
+					</div>
+				);
+			}
 		} else {
 			for (let p of props.progress.points) {
 				if (p.pointid == point.id) {
 					return (
-						<div
-							className={classes.highlightedPoint}
-							key={point.id}
-						>
-							<ListItem
-								button
-								onClick={() => buttonClick(point.id)}
-							>
+						<div className={classes.highlightedPoint} key={point.id}>
+							<ListItem button onClick={() => buttonClick(point.id)}>
 								<ListItemText primary={point.name} />
 							</ListItem>
 						</div>
