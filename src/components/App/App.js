@@ -20,7 +20,6 @@ import Admin from '../views/Admin';
  */
 
 const App = () => {
-
 	useEffect(() => {
 		sync();
 	}, []);
@@ -45,7 +44,10 @@ const App = () => {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
-			});
+			})
+				.then((response) => response.json())
+				.then((response) => {
+				});
 		});
 	};
 	return (
@@ -54,16 +56,10 @@ const App = () => {
 			<div className={classes.main}>
 				<Switch>
 					<Route path="/" exact />
-					<ProtectedRoute
-						path="/dashboard"
-						component={StudentDashboard}
-					/>
+					<ProtectedRoute path="/dashboard" component={StudentDashboard} />
 					<ProtectedRoute path="/subject" component={Subject} />
 					<ProtectedRoute path="/point" component={Point} />
-					<ProtectedRoute
-						path="/external-api"
-						component={ExternalApi}
-					/>
+					<ProtectedRoute path="/external-api" component={ExternalApi} />
 					<ProtectedRoute path="/admin" component={Admin} />
 				</Switch>
 			</div>
