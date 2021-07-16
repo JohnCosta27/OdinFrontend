@@ -9,6 +9,8 @@ const ViewWrapper = (props) => {
 			flexDirection: 'column',
 			justifyContent: 'center',
 			alignItems: 'center',
+            overflowX: 'hidden',
+            overflowY: 'hidden'
         }
     }));
     const classes = useStyles();

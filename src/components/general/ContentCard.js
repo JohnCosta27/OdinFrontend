@@ -19,6 +19,18 @@ const ContentCard = (props) => {
 			paddingRight: theme.spacing(2),
 			paddingTop: theme.spacing(2),
 			paddingBottom: theme.spacing(2),
+			display: 'flex',
+			flexDirection: 'column',
+			justifyContent: 'center',
+			height: '100%',
+		},
+		final: {
+			width: '100%',
+			flex: '1 1 auto', 
+			display: 'flex',
+			flexDirection: 'column',
+			justifyContent: 'space-between',
+			height: '100%',
 		},
 	}));
 
@@ -27,7 +39,7 @@ const ContentCard = (props) => {
 	return (
 		<div className={classes.main}>
 			<Paper className={classes.paper} elevation={4}>
-				{props.children}
+				<div className={classes.final}>{props.children}</div>
 			</Paper>
 		</div>
 	);

@@ -13,6 +13,7 @@ import AddProgress from '../progress/AddProgress';
 import StudentDashboard from '../views/StudentDashboard';
 import Point from '../views/Point';
 import Admin from '../views/Admin';
+import Student from '../views/Student';
 
 /**
  * App component
@@ -61,6 +62,7 @@ const App = () => {
 					<ProtectedRoute path="/point" component={Point} />
 					<ProtectedRoute path="/external-api" component={ExternalApi} />
 					<ProtectedRoute path="/admin" component={Admin} />
+					<ProtectedRoute path="/student" component={Student} />
 				</Switch>
 			</div>
 		</div>

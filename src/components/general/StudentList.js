@@ -26,6 +26,7 @@ const StudentList = (props) => {
 			},
 		});
 		const responseData = await data.json();
+		console.log(responseData);
 		setUsers(responseData);
 		setLoading(false);
 	};
@@ -44,8 +45,8 @@ const StudentList = (props) => {
                 </Typography>
 				<List>
                     {users.map((user) => (
-                        <ListItem key={user.user_id}>
-                            <ListItemText primary={user.email} />
+                        <ListItem button key={user.user_id}>
+                            <ListItemText primary={user.given_name + " " + user.family_name} secondary={user.email} />
                         </ListItem>
                 ))}
                 </List>

@@ -8,6 +8,8 @@ import FileUpload from '../general/FileUpload';
 import StudentList from '../general/StudentList';
 import Grid from '@material-ui/core/Grid';
 import GridItem from '../general/GridItem';
+import AdminSubjectsCard from '../general/AdminSubjectsCard';
+import ContentCard from '../general/ContentCard';
 
 const Admin = () => {
 	const { getAccessTokenSilently } = useAuth0();
@@ -38,14 +40,11 @@ const Admin = () => {
 		return (
 			<ViewWrapper>
 				<Grid container spacing={3}>
-					<GridItem md={4} xs={12}>
-						<CreateSubject />
+					<GridItem md={6} xs={12}>
+						<AdminSubjectsCard />
 					</GridItem>
-					<GridItem md={4} xs={12}>
-						<CreateSubjectPoints />
-					</GridItem>
-					<GridItem md={4} xs={12}>
-						<FileUpload />
+					<GridItem md={6} xs={12}>
+						<ContentCard />
 					</GridItem>
 					<GridItem xs={12}>
 						<StudentList />
