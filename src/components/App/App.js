@@ -14,6 +14,7 @@ import StudentDashboard from '../views/StudentDashboard';
 import Point from '../views/Point';
 import Admin from '../views/Admin';
 import Student from '../views/Student';
+import SubjectList from '../views/SubjectList';
 
 /**
  * App component
@@ -60,9 +61,9 @@ const App = () => {
 					<ProtectedRoute path="/dashboard" component={StudentDashboard} />
 					<ProtectedRoute path="/subject" component={Subject} />
 					<ProtectedRoute path="/point" component={Point} />
-					<ProtectedRoute path="/external-api" component={ExternalApi} />
 					<ProtectedRoute path="/admin" component={Admin} />
 					<ProtectedRoute path="/student" component={Student} />
+					<ProtectedRoute path="/subject-list" component={SubjectList} />
 				</Switch>
 			</div>
 		</div>

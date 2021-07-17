@@ -9,8 +9,12 @@ import ContentCard from '../general/ContentCard';
 import Grid from '@material-ui/core/Grid';
 import GridItem from '../general/GridItem';
 import ViewWrapper from '../general/ViewWrapper';
+import jwtDecode from 'jwt-decode';
+import Button from '@material-ui/core/Button'
+import CreateSubjectPoints from '../subjects/CreateSubjectPoints';
 
 const Subject = () => {
+	const [admin, setAdmin] = useState(false);
 	const [topics, setTopics] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [pointsProgress, setPointsProgress] = useState([]);
@@ -23,7 +27,16 @@ const Subject = () => {
 	useEffect(() => {
 		getSubject();
 		getPointsProgress();
+		checkAdmin();
 	}, []);
+
+	const checkAdmin = async () => {
+		const token = await getAccessTokenSilently();
+		const jwt = jwtDecode(token);
+		if (jwt.permissions.includes('role:admin')) {
+			setAdmin(true);
+		}
+	};
 
 	const getSubject = async () => {
 		const token = await getAccessTokenSilently();
@@ -77,22 +90,38 @@ const Subject = () => {
 			</ViewWrapper>
 		);
 	} else {
-		return (
-			<ViewWrapper>
-				<Typography variant="h2" align="center">
-					{topics[0].subjects.level} {topics[0].subjects.name} ({topics[0].subjects.examboard})
-				</Typography>
-				<ContentCard>
-					<FormControlLabel
-						control={<Checkbox onChange={onChangeView} value={progressOnly} name="progress-button" />}
-						label="Show Progress Only"
-					/>
-				</ContentCard>
-				<Grid container spacing={3}>
-					{topics.map((topic) => topicTables(topic))}
-				</Grid>
-			</ViewWrapper>
-		);
+		if (admin) {
+			return (
+				<ViewWrapper>
+					<Typography variant="h2" align="center">
+						{topics[0].subjects.level} {topics[0].subjects.name} ({topics[0].subjects.examboard})
+					</Typography>
+					<ContentCard>
+						<CreateSubjectPoints />
+					</ContentCard>
+					<Grid container spacing={3}>
+						{topics.map((topic) => topicTables(topic))}
+					</Grid>
+				</ViewWrapper>
+			);
+		} else {
+			return (
+				<ViewWrapper>
+					<Typography variant="h2" align="center">
+						{topics[0].subjects.level} {topics[0].subjects.name} ({topics[0].subjects.examboard})
+					</Typography>
+					<ContentCard>
+						<FormControlLabel
+							control={<Checkbox onChange={onChangeView} value={progressOnly} name="progress-button" />}
+							label="Show Progress Only"
+						/>
+					</ContentCard>
+					<Grid container spacing={3}>
+						{topics.map((topic) => topicTables(topic))}
+					</Grid>
+				</ViewWrapper>
+			);
+		}
 	}
 };
 
