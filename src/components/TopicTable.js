@@ -21,7 +21,6 @@ const TopicTable = (props) => {
 		table: {
 			marginLeft: theme.spacing(2),
 			marginRight: theme.spacing(2),
-			maxWidth: 1200,
 			width: '100%',
 		},
 		highlightedPoint: {

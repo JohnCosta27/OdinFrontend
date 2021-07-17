@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 const ContentCard = (props) => {
 	const useStyles = makeStyles((theme) => ({
 		main: {
-			width: '100%',
+			width: (props.small) ? 1000: '100%',
 			paddingLeft: theme.spacing(5),
 			paddingRight: theme.spacing(5),
 			paddingTop: theme.spacing(5),

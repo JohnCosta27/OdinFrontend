@@ -10,7 +10,8 @@ const ViewWrapper = (props) => {
 			justifyContent: 'center',
 			alignItems: 'center',
             overflowX: 'hidden',
-            overflowY: 'hidden'
+            overflowY: 'hidden',
+            maxWidth: 2000
         }
     }));
     const classes = useStyles();
