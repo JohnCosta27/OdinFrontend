@@ -28,8 +28,8 @@ const ContentCard = (props) => {
 			width: '100%',
 			flex: '1 1 auto', 
 			display: 'flex',
-			flexDirection: 'column',
-			justifyContent: 'space-between',
+			flexDirection: (props.row) ? 'row' : 'column',
+			justifyContent: (props.center) ? 'center' : 'space-between',
 			height: '100%',
 		},
 	}));

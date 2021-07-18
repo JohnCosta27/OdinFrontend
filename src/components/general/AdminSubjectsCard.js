@@ -6,6 +6,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import CreateSubject from '../subjects/CreateSubject';
 import CreateSubjectPoints from '../subjects/CreateSubjectPoints';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const AdminSubjectsCard = () => {
 	const useStyles = makeStyles((theme) => ({
@@ -44,7 +45,11 @@ const AdminSubjectsCard = () => {
 			</div>
 			<div className={classes.centeredButtons}>
 				<div className={classes.buttonWrapper}>
-					<Button color="secondary" variant="contained">
+					<Button
+						color="secondary"
+						variant="contained"
+						onClick={() => (document.location.href = '/subject-list')}
+					>
 						View All
 					</Button>
 				</div>

@@ -10,7 +10,6 @@ import Grid from '@material-ui/core/Grid';
 import GridItem from '../general/GridItem';
 import ViewWrapper from '../general/ViewWrapper';
 import jwtDecode from 'jwt-decode';
-import Button from '@material-ui/core/Button'
 import CreateSubjectPoints from '../subjects/CreateSubjectPoints';
 
 const Subject = () => {
@@ -19,6 +18,7 @@ const Subject = () => {
 	const [loading, setLoading] = useState(true);
 	const [pointsProgress, setPointsProgress] = useState([]);
 	const [progressOnly, setProgressOnly] = useState(false);
+	const [edit, setEdit] = useState(false);
 
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
 	const { getAccessTokenSilently } = useAuth0();
@@ -66,7 +66,7 @@ const Subject = () => {
 			if (progress.topicid == topic.id) {
 				return (
 					<GridItem key={topic.id} lg={4} md={6} xs={12}>
-						<TopicTable rows={topic} progress={progress} showProgressOnly={progressOnly} />
+						<TopicTable rows={topic} progress={progress} showProgressOnly={progressOnly} edit={edit} admin={admin} />
 					</GridItem>
 				);
 			}
@@ -74,7 +74,7 @@ const Subject = () => {
 
 		return (
 			<GridItem key={topic.id} lg={4} md={6} xs={12}>
-				<TopicTable rows={topic} showProgressOnly={progressOnly} />
+				<TopicTable rows={topic} showProgressOnly={progressOnly} edit={edit} admin={admin}/>
 			</GridItem>
 		);
 	};
@@ -82,6 +82,10 @@ const Subject = () => {
 	const onChangeView = () => {
 		setProgressOnly(!progressOnly);
 	};
+
+	const onEditChange = () => {
+		setEdit(!edit);
+	}
 
 	if (loading) {
 		return (
@@ -96,7 +100,11 @@ const Subject = () => {
 					<Typography variant="h2" align="center">
 						{topics[0].subjects.level} {topics[0].subjects.name} ({topics[0].subjects.examboard})
 					</Typography>
-					<ContentCard>
+					<ContentCard row center>
+						<FormControlLabel
+							control={<Checkbox name="edit-button" onChange={onEditChange} value={edit} />}
+							label="Edit mode"
+						/>
 						<CreateSubjectPoints />
 					</ContentCard>
 					<Grid container spacing={3}>
