@@ -11,11 +11,11 @@ import DialogStyled from './DialogStyled';
 import SubjectTopicPointForm from '../subjects/SubjectTopicPointForm';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import ReactTooltip from 'react-tooltip';
+import Button from '@material-ui/core/Button';
 import 'react-calendar-heatmap/dist/styles.css';
 import '../styles.css';
 
 const StudentRevision = (props) => {
-	console.log(props);
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
 	const { getAccessTokenSilently } = useAuth0();
 
@@ -104,7 +104,6 @@ const StudentRevision = (props) => {
 
 	const getDateValues = () => {
 		let dates = [];
-		console.log(props.points);
 		for (let d of props.points) {
 			let found = false;
 			for (let existingDates of dates) {
@@ -122,7 +121,6 @@ const StudentRevision = (props) => {
 				dates.push({ date: new Date(d.datetime), count: 1 });
 			}
 		}
-		console.log(dates);
 		return dates;
 	};
 
@@ -199,12 +197,13 @@ const StudentRevision = (props) => {
 					</DialogStyled>
 				</div>
 				<div className={classes.button}>
-					<DialogStyled
-						buttonTitle="Revision Dates"
-						title="Revision Dates"
-						open={openDates}
-						setOpen={setOpenDates}
-					></DialogStyled>
+					<Button
+						variant="contained"
+						color="secondary"
+						onClick={() => (document.location.href = '/revision-points')}
+					>
+						Revision Points
+					</Button>
 				</div>
 			</div>
 		</ContentCard>

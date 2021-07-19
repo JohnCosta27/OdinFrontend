@@ -17,6 +17,7 @@ import Student from '../views/Student';
 import SubjectList from '../views/SubjectList';
 import RedirectComponent from '../general/RedirectComponent';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import RevisionDates from '../views/RevisionDates';
 
 /**
  * App component
@@ -83,6 +84,7 @@ const App = () => {
 					<ProtectedRoute path="/admin" component={Admin} />
 					<ProtectedRoute path="/student" component={Student} />
 					<ProtectedRoute path="/subject-list" component={SubjectList} />
+					<ProtectedRoute path="/revision-points" component={RevisionDates} />
 				</Switch>
 			</div>
 		</div>
