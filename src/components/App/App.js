@@ -15,6 +15,8 @@ import Point from '../views/Point';
 import Admin from '../views/Admin';
 import Student from '../views/Student';
 import SubjectList from '../views/SubjectList';
+import RedirectComponent from '../general/RedirectComponent';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 /**
  * App component
@@ -22,6 +24,7 @@ import SubjectList from '../views/SubjectList';
  */
 
 const App = () => {
+	const [data, setData] = useState({empty: true});
 	useEffect(() => {
 		sync();
 	}, []);
@@ -49,15 +52,31 @@ const App = () => {
 			})
 				.then((response) => response.json())
 				.then((response) => {
+					setData(response);
 				});
 		});
 	};
+
+	const getRedirect = () => {
+		if (!data.empty) {
+			return (
+				<Route path="/" exact>
+					<RedirectComponent data={data} />
+				</Route>
+			);
+		} else {
+			return (
+				<CircularProgress />
+			)
+		}
+	};
+
 	return (
 		<div>
 			<AppBar />
 			<div className={classes.main}>
 				<Switch>
-					<Route path="/" exact />
+					{getRedirect()}
 					<ProtectedRoute path="/dashboard" component={StudentDashboard} />
 					<ProtectedRoute path="/subject" component={Subject} />
 					<ProtectedRoute path="/point" component={Point} />
