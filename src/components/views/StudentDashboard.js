@@ -8,6 +8,7 @@ import StudentRevision from '../general/StudentRevision';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import GridItem from '../general/GridItem';
+import StudentNotes from '../general/StudentNotes';
 
 const StudentDashboard = () => {
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
@@ -65,8 +66,11 @@ const StudentDashboard = () => {
 					<GridItem lg={4} md={6} xs={12}>
 						<StudentSubjects />
 					</GridItem>
-					<GridItem lg={4} md={12} xs={12}>
+					<GridItem lg={4} md={6} xs={12}>
 						<StudentRevision setNewRevised={setNewRevised} points={totalLearnt} />
+					</GridItem>
+					<GridItem lg={4} md={6} xs={12}>
+						<StudentNotes />
 					</GridItem>
 				</Grid>
 			</ViewWrapper>

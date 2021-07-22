@@ -10,12 +10,16 @@ import ContentNotes from '../general/ContentNotes';
 import RevisionPoint from '../general/RevisionPoint';
 import GridItem from '../general/GridItem';
 import Grid from '@material-ui/core/Grid';
+import DisplayStudentNotes from '../general/DisplayStudentNotes';
 
 const Point = () => {
 	const [loading1, setLoading1] = useState(true);
 	const [loading2, setLoading2] = useState(true);
+	const [loading3, setLoading3] = useState(true);
 	const [point, setPoint] = useState([]);
 	const [pointRevision, setPointRevision] = useState([]);
+
+	const [studentNotes, setStudentNotes] = useState([]);
 
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
 	const { getAccessTokenSilently } = useAuth0();
@@ -24,6 +28,7 @@ const Point = () => {
 	useEffect(() => {
 		getPoint();
 		getPointRevision();
+		getUserNotes();
 	}, []);
 
 	const getPoint = async () => {
@@ -56,6 +61,18 @@ const Point = () => {
 		setLoading2(false);
 	};
 
+	const getUserNotes = async () => {
+		const token = await getAccessTokenSilently();
+		const data = await fetch(`${serverUrl}/usercontent/getusernotepoint?pointid=` + urlParams.get('pointid'), {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		const responseData = await data.json();
+		setStudentNotes(responseData);
+		setLoading3(false);
+	}
+
 	const getDates = (point) => {
 		let dates = [];
 		for (let p of point) {
@@ -84,7 +101,7 @@ const Point = () => {
 		}
 	};
 
-	if (loading1 || loading2) {
+	if (loading1 || loading2 || loading3) {
 		return <CircularProgress />;
 	} else {
 		return (
@@ -102,6 +119,9 @@ const Point = () => {
 					</ContentCard>
 				</GridItem>
 				{getRevisionPoint()}
+				<GridItem lg={12} md={12} xs={12}>
+					<DisplayStudentNotes notes={studentNotes} />
+				</GridItem>
 				<GridItem lg={12} md={12} xs={12}>
 					<ContentNotes />
 				</GridItem>

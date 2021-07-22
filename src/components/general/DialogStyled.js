@@ -14,10 +14,11 @@ const DialogStyled = (props) => {
 	const useStyles = makeStyles((theme) => ({
 		root: {
 			display: 'flex',
-			justifyContent: 'center'
+			justifyContent: 'center',
 		},
 		paper: {
 			minWidth: 500,
+			width: '100%',
 			[theme.breakpoints.down('sm')]: {
 				minWidth: 0,
 			},
