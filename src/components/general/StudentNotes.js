@@ -9,6 +9,8 @@ import SubjectTopicPointForm from '../subjects/SubjectTopicPointForm';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { Typography } from '@material-ui/core';
+import ListStudentNotes from './ListStudentNotes';
 
 const StudentNotes = () => {
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
@@ -110,6 +112,10 @@ const StudentNotes = () => {
 
 	return (
 		<ContentCard>
+			<Typography variant="h2" align="center">
+				Your Notes
+			</Typography>
+			<ListStudentNotes />
 			<DialogStyled
 				buttonTitle="Create Note"
 				title="Create Note"
