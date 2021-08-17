@@ -40,41 +40,62 @@ const Subject = () => {
 
 	const getSubject = async () => {
 		const token = await getAccessTokenSilently();
-		const data = await fetch(`${serverUrl}/subjects/get?subjectid=` + urlParams.get('subjectid'), {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
+		const data = await fetch(
+			`${serverUrl}/subjects/get?subjectid=` + urlParams.get('subjectid'),
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}
+		);
 		const responseData = await data.json();
+		console.log(responseData);
 		setTopics(responseData);
 		setLoading(false);
 	};
 
 	const getPointsProgress = async () => {
 		const token = await getAccessTokenSilently();
-		const data = await fetch(`${serverUrl}/progress/getprogressinsubject?subjectid=` + urlParams.get('subjectid'), {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
+		const data = await fetch(
+			`${serverUrl}/progress/getprogressinsubject?subjectid=` +
+				urlParams.get('subjectid'),
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}
+		);
 		const responseData = await data.json();
 		setPointsProgress(responseData);
 	};
 
 	const topicTables = (topic) => {
-		for (let progress of pointsProgress) {
-			if (progress.topicid == topic.id) {
-				return (
-					<GridItem key={topic.id} lg={4} md={6} xs={12}>
-						<TopicTable rows={topic} progress={progress} showProgressOnly={progressOnly} edit={edit} admin={admin} />
-					</GridItem>
-				);
+		try {
+			for (let progress of pointsProgress) {
+				if (progress.topicid == topic.id) {
+					return (
+						<GridItem key={topic.id} lg={4} md={6} xs={12}>
+							<TopicTable
+								rows={topic}
+								progress={progress}
+								showProgressOnly={progressOnly}
+								edit={edit}
+								admin={admin}
+							/>
+						</GridItem>
+					);
+				}
 			}
-		}
+		} catch (error) {}
 
 		return (
 			<GridItem key={topic.id} lg={4} md={6} xs={12}>
-				<TopicTable rows={topic} showProgressOnly={progressOnly} edit={edit} admin={admin}/>
+				<TopicTable
+					rows={topic}
+					showProgressOnly={progressOnly}
+					edit={edit}
+					admin={admin}
+				/>
 			</GridItem>
 		);
 	};
@@ -85,7 +106,7 @@ const Subject = () => {
 
 	const onEditChange = () => {
 		setEdit(!edit);
-	}
+	};
 
 	if (loading) {
 		return (
@@ -98,11 +119,18 @@ const Subject = () => {
 			return (
 				<ViewWrapper>
 					<Typography variant="h2" align="center">
-						{topics[0].subjects.level} {topics[0].subjects.name} ({topics[0].subjects.examboard})
+						{topics[0].subjects.level} {topics[0].subjects.name} (
+						{topics[0].subjects.examboard})
 					</Typography>
 					<ContentCard row center>
 						<FormControlLabel
-							control={<Checkbox name="edit-button" onChange={onEditChange} value={edit} />}
+							control={
+								<Checkbox
+									name="edit-button"
+									onChange={onEditChange}
+									value={edit}
+								/>
+							}
 							label="Edit mode"
 						/>
 						<CreateSubjectPoints />
@@ -116,11 +144,18 @@ const Subject = () => {
 			return (
 				<ViewWrapper>
 					<Typography variant="h2" align="center">
-						{topics[0].subjects.level} {topics[0].subjects.name} ({topics[0].subjects.examboard})
+						{topics[0].subjects.level} {topics[0].subjects.name} (
+						{topics[0].subjects.examboard})
 					</Typography>
 					<ContentCard>
 						<FormControlLabel
-							control={<Checkbox onChange={onChangeView} value={progressOnly} name="progress-button" />}
+							control={
+								<Checkbox
+									onChange={onChangeView}
+									value={progressOnly}
+									name="progress-button"
+								/>
+							}
 							label="Show Progress Only"
 						/>
 					</ContentCard>
