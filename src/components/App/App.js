@@ -18,6 +18,7 @@ import SubjectList from '../views/SubjectList';
 import RedirectComponent from '../general/RedirectComponent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import RevisionDates from '../views/RevisionDates';
+import FrontPage from '../views/FrontPage';
 
 /**
  * App component
@@ -25,7 +26,6 @@ import RevisionDates from '../views/RevisionDates';
  */
 
 const App = () => {
-	const [data, setData] = useState({empty: true});
 	useEffect(() => {
 		sync();
 	}, []);
@@ -35,7 +35,6 @@ const App = () => {
 			display: 'flex',
 			justifyContent: 'center',
 			width: '100%',
-			paddingTop: theme.spacing(5),
 		},
 	}));
 
@@ -53,23 +52,8 @@ const App = () => {
 			})
 				.then((response) => response.json())
 				.then((response) => {
-					setData(response);
 				});
 		});
-	};
-
-	const getRedirect = () => {
-		if (!data.empty) {
-			return (
-				<Route path="/" exact>
-					<RedirectComponent data={data} />
-				</Route>
-			);
-		} else {
-			return (
-				<CircularProgress />
-			)
-		}
 	};
 
 	return (
@@ -77,7 +61,7 @@ const App = () => {
 			<AppBar />
 			<div className={classes.main}>
 				<Switch>
-					{getRedirect()}
+					<Route path="/" exact component={FrontPage} />
 					<ProtectedRoute path="/dashboard" component={StudentDashboard} />
 					<ProtectedRoute path="/subject" component={Subject} />
 					<ProtectedRoute path="/point" component={Point} />

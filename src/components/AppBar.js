@@ -20,6 +20,10 @@ const AppBar = () => {
 		title: {
 			flexGrow: 1,
 		},
+		toolbarStyles: {
+			paddingLeft: theme.spacing(5),
+			paddingRight: theme.spacing(5),
+		},
 	}));
 
 	const classes = useStyles();
@@ -27,15 +31,7 @@ const AppBar = () => {
 	return (
 		<div className={classes.root}>
 			<AppBarComponent position="static">
-				<Toolbar>
-					<IconButton
-						edge="start"
-						className={classes.menuButton}
-						color="inherit"
-						aria-label="menu"
-					>
-						<MenuIcon />
-					</IconButton>
+				<Toolbar className={classes.toolbarStyles}>
 					<Typography variant="h6" className={classes.title}>
 						Odin
 					</Typography>
