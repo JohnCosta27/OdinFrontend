@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import bannerImage from '../../images/background.jpg';
 import Logo from '../../images/TransparentLogo.png';
+import { differenceInCalendarISOWeeks } from 'date-fns';
 
 const FrontPage = () => {
 	const useStyles = makeStyles((theme) => ({
@@ -48,7 +49,7 @@ const FrontPage = () => {
 			display: 'flex',
 			justifyContent: 'center',
 			alignItems: 'center',
-			height: '30vh'
+			height: '30vh',
 		},
 		logo: {
 			backgroundImage: `url(${Logo})`,
@@ -66,30 +67,28 @@ const FrontPage = () => {
 			justifyContent: 'center',
 			paddingTop: theme.spacing(5),
 			paddingBottom: theme.spacing(5),
-			backgroundColor: theme.palette.primary.main
+			backgroundColor: theme.palette.primary.main,
 		},
 	}));
 	const classes = useStyles();
 
 	return (
 		<div className={classes.root}>
-			<div className={classes.banner}>
-				<Typography
-					variant="h1"
-					color="initial"
-					align="center"
-					className={classes.whiteText}
-				>
-					Odin
-				</Typography>
-				<Typography
-					variant="h2"
-					color="initial"
-					align="center"
-					className={classes.whiteText}
-				>
-					Revision, revised!
-				</Typography>
+			<div
+				className="flex flex-col justify-center w-full h-1/2 items-center bg-gradient-to-r
+					from-green-300
+					to-blue-700
+					via-purple-500
+					"
+			>
+				<div className="m-auto flex flex-col">
+					<h1 className="flex-auto text-9xl text-center font-sans text-transparent bg-clip-text bg-gradient-to-br from-gray-700 to-gray-900">
+						Odin
+					</h1>
+					<h1 className="flex-auto text-8xl text-center font-sans text-transparent bg-clip-text bg-gradient-to-br from-gray-700 to-gray-900">
+						Revision, Revised!
+					</h1>
+				</div>
 			</div>
 			<div className={classes.section}>
 				<div className={classes.sectionContent}>
@@ -97,12 +96,13 @@ const FrontPage = () => {
 						We make it easier than ever to keep track of revision
 					</Typography>
 					<div className={classes.space} />
-					<Typography variant="body1">
-						lorem idmsadsalorem idmsadsalorem idmsadsalorem
-						idmsadsalorem idmsadsalorem idmsadsalorem idmsadsalorem
-						idmsadsalorem idmsadsalorem idmsadsalorem idmsadsalorem
-						idmsadsalorem idmsadsalorem idmsadsa
-					</Typography>
+					<div className="px-24">
+						<Typography variant="body1">
+							With Odin, you will never get lost with your
+							revision again. You will always know what you need
+							to revise, when to revise it, and how to revise it.
+						</Typography>
+					</div>
 					<div className={classes.space} />
 					<div className={classes.rowFlex}>
 						<Typography variant="h4">

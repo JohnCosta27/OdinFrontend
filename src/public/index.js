@@ -6,7 +6,7 @@ import Auth0ProviderWithHistory from '../auth/auth0-provider-with-history';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Theme from '../components/Theme';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import './index.css';
+import './style.css';
 
 const onRedirectCallback = (appState) => {
 	history.push(
