@@ -70,7 +70,7 @@ const StudentSubjects = () => {
 						</div>
 					))}
 				</List>
-				<AddSubject />
+				<AddSubject subjects={subjects} setSubjects={setSubjects} />
 			</ContentCard>
 		);
 	}

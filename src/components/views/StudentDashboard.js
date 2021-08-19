@@ -61,13 +61,19 @@ const StudentDashboard = () => {
 			<ViewWrapper>
 				<Grid container spacing={3}>
 					<GridItem lg={4} md={6} xs={12}>
-						<LatestProgress points={learntPoints} loading={loading} />
+						<LatestProgress
+							points={learntPoints}
+							loading={loading}
+						/>
 					</GridItem>
 					<GridItem lg={4} md={6} xs={12}>
 						<StudentSubjects />
 					</GridItem>
 					<GridItem lg={4} md={6} xs={12}>
-						<StudentRevision setNewRevised={setNewRevised} points={totalLearnt} />
+						<StudentRevision
+							setNewRevised={setNewRevised}
+							points={totalLearnt}
+						/>
 					</GridItem>
 					<GridItem lg={4} md={6} xs={12}>
 						<StudentNotes />

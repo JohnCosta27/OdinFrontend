@@ -7,14 +7,14 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
-const AddSubject = () => {
+const AddSubject = (props) => {
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
 	const { getAccessTokenSilently } = useAuth0();
 
 	const [open, setOpen] = useState(false);
+	const [selectedSubject, setSelectedSubject] = useState('');
 	const [subjects, setSubjects] = useState([]);
 	const [loading, setLoading] = useState(true);
-	const [selectedSubject, setSelectedSubject] = useState("");
 
 	useEffect(() => {
 		getSubjects();
@@ -35,9 +35,9 @@ const AddSubject = () => {
 	const submit = async (event) => {
 		event.preventDefault();
 		const token = await getAccessTokenSilently();
-		const body = {subjectid: selectedSubject};
+		const body = { subjectid: selectedSubject };
 		const data = await fetch(`${serverUrl}/users/addsubject`, {
-			method: "POST",
+			method: 'POST',
 			headers: {
 				Authorization: `Bearer ${token}`,
 				Accept: 'application/json',
@@ -46,12 +46,19 @@ const AddSubject = () => {
 			body: JSON.stringify(body),
 		});
 		const responseData = await data.json();
-		const results = subjects.filter(s => {
-			return s.id != selectedSubject
-		});
-		setSubjects(results);
+
+		for (let sub of subjects) {
+			console.log(sub);
+			if (sub.id == selectedSubject) {
+				let newSubjects = props.subjects;
+				newSubjects.push({ subjects: sub });
+				props.setSubjects(props.subjects.concat());
+				break;
+			}
+		}
 		setOpen(false);
-	}
+		getSubjects();
+	};
 
 	const selectSubject = (event) => {
 		setSelectedSubject(event.target.value);
@@ -92,7 +99,7 @@ const AddSubject = () => {
 	return (
 		<DialogStyled
 			buttonTitle="Add Subject"
-            title="Add Subject"
+			title="Add Subject"
 			submitTitle="Add"
 			open={open}
 			setOpen={setOpen}
