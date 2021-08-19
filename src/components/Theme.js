@@ -16,6 +16,9 @@ let Theme = createMuiTheme({
 			main: green[200],
 			needsRevision: orange[200],
 		},
+		darkbackground: {
+			main: '#111827',
+		},
 	},
 	typography: {
 		fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,

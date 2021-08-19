@@ -1,9 +1,12 @@
 import React from 'react';
+import clsx from 'clsx';
 import ViewWrapper from '../general/ViewWrapper';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import bannerImage from '../../images/background.jpg';
 import Logo from '../../images/TransparentLogo.png';
+import waves from '../../images/waves.svg';
+import waves2 from '../../images/waves2.svg';
 import { differenceInCalendarISOWeeks } from 'date-fns';
 
 const FrontPage = () => {
@@ -67,7 +70,20 @@ const FrontPage = () => {
 			justifyContent: 'center',
 			paddingTop: theme.spacing(5),
 			paddingBottom: theme.spacing(5),
-			backgroundColor: theme.palette.primary.main,
+			backgroundColor: theme.palette.darkbackground.main,
+		},
+		spacer: {
+			aspectRatio: '1920/200',
+			width: '100%',
+			backgroundRepeat: 'no-repeat',
+			backgroundPosition: 'center',
+			backgroundSize: 'cover',
+		},
+		layer1: {
+			backgroundImage: `url(${waves})`,
+		},
+		layer2: {
+			backgroundImage: `url(${waves2})`,
 		},
 	}));
 	const classes = useStyles();
@@ -113,6 +129,10 @@ const FrontPage = () => {
 					</div>
 				</div>
 			</div>
+
+			<div className={clsx(classes.spacer, classes.layer1)} />
+			<div className={clsx(classes.spacer, classes.layer2)} />
+
 			<div className={classes.secondSection}>
 				<div className={classes.sectionContent}>
 					<Typography variant="h2" className={classes.whiteText}>
