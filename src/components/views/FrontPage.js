@@ -91,7 +91,7 @@ const FrontPage = () => {
 	return (
 		<div className={classes.root}>
 			<div
-				className="flex flex-col justify-center w-full h-1/2 items-center bg-gradient-to-r
+				className="flex flex-col justify-center w-full h-screen items-center bg-gradient-to-r
 					from-green-300
 					to-blue-700
 					via-purple-500
