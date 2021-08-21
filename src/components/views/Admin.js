@@ -25,6 +25,7 @@ const Admin = () => {
 	const checkPermissions = () => {
 		getAccessTokenSilently().then((token) => {
 			const jwt = jwtDecode(token);
+			console.log(jwt);
 			if (jwt.permissions.includes('role:admin')) {
 				setAllowed(true);
 				setLoading(false);
@@ -46,7 +47,7 @@ const Admin = () => {
 					<GridItem md={6} xs={12}>
 						<ContentCard />
 					</GridItem>
-					<GridItem xs={12}>
+					<GridItem md={6} xs={12}>
 						<StudentList />
 					</GridItem>
 				</Grid>

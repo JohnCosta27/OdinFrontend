@@ -27,7 +27,6 @@ const SubjectList = () => {
 			},
 		});
 		const responseData = await data.json();
-		console.log(responseData);
 		setSubjects(responseData);
 		setLoading(false);
 	};
@@ -50,11 +49,19 @@ const SubjectList = () => {
 							<ListItem
 								button
 								key={subject.id}
-								onClick={() => (document.location.href = '/subject?subjectid=' + subject.id)}
+								onClick={() =>
+									(document.location.href =
+										'/subject?subjectid=' + subject.id)
+								}
 							>
 								<ListItemText
 									primary={subject.name}
-									secondary={subject.level + ' (' + subject.examboard + ')'}
+									secondary={
+										subject.level +
+										' (' +
+										subject.examboard +
+										')'
+									}
 								/>
 							</ListItem>
 						))}

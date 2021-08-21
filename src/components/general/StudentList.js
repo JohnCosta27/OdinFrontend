@@ -8,7 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 
 const StudentList = (props) => {
-    const { getAccessTokenSilently } = useAuth0();
+	const { getAccessTokenSilently } = useAuth0();
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 	const [users, setUsers] = useState([]);
@@ -26,7 +26,6 @@ const StudentList = (props) => {
 			},
 		});
 		const responseData = await data.json();
-		console.log(responseData);
 		setUsers(responseData);
 		setLoading(false);
 	};
@@ -40,16 +39,22 @@ const StudentList = (props) => {
 	} else {
 		return (
 			<ContentCard>
-                <Typography variant="h2" align="center">
-                    User List
-                </Typography>
+				<Typography variant="h2" align="center">
+					User List
+				</Typography>
 				<List>
-                    {users.map((user) => (
-                        <ListItem button key={user.user_id}>
-                            <ListItemText primary={user.given_name + " " + user.family_name} secondary={user.email} />
-                        </ListItem>
-                ))}
-                </List>
+					{users.map((user) => (
+						<ListItem
+							button
+							key={user.user_id}
+							onClick={() =>
+								(document.location.href = `/student?studentid=${user.user_id}&email=${user.email}`)
+							}
+						>
+							<ListItemText primary={user.email} />
+						</ListItem>
+					))}
+				</List>
 			</ContentCard>
 		);
 	}
