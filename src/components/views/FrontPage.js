@@ -7,7 +7,7 @@ import bannerImage from '../../images/background.jpg';
 import Logo from '../../images/TransparentLogo.png';
 import waves from '../../images/waves.svg';
 import waves2 from '../../images/waves2.svg';
-import { differenceInCalendarISOWeeks } from 'date-fns';
+import bookSvg from '../../images/book.svg';
 
 const FrontPage = () => {
 	const useStyles = makeStyles((theme) => ({
@@ -138,6 +138,52 @@ const FrontPage = () => {
 					<Typography variant="h2" className={classes.whiteText}>
 						How does it work?
 					</Typography>
+					<div className={classes.space} />
+					<div className="flex align-center justify-center">
+						<div className="flex flex-col justify-center">
+							<p className="flex-auto text-2xl text-white py-4">
+								Odin is the
+								<strong className="text-green-500">
+									{' '}
+									best{' '}
+								</strong>
+								solution for keeping track of{' '}
+								<strong className="text-blue-400">
+									revision
+								</strong>
+								.
+							</p>
+							<p className="flex-auto text-2xl text-white py-4">
+								We separate{' '}
+								<strong className="text-green-500">
+									{' '}
+									subjects{' '}
+								</strong>{' '}
+								into small points, which can be{' '}
+								<strong className="text-blue-400">
+									revised.
+								</strong>
+							</p>
+							<p className="flex-auto text-2xl text-white py-4">
+								And we will tell which one's you{' '}
+								<strong className="text-green-500">
+									{' '}
+									know{' '}
+								</strong>
+								and which one's you need to{' '}
+								<strong className="text-blue-400">
+									revised
+								</strong>
+								.
+							</p>
+						</div>
+						<div className="px-20 w-2/5">
+							<img
+								src={bookSvg}
+								className="object-contain w-96"
+							/>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
