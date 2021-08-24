@@ -11,6 +11,7 @@ import RevisionPoint from '../general/RevisionPoint';
 import GridItem from '../general/GridItem';
 import Grid from '@material-ui/core/Grid';
 import DisplayStudentNotes from '../general/DisplayStudentNotes';
+import YouTube from 'react-youtube';
 
 const Point = () => {
 	const [loading1, setLoading1] = useState(true);
@@ -33,11 +34,15 @@ const Point = () => {
 
 	const getPoint = async () => {
 		const token = await getAccessTokenSilently();
-		const data = await fetch(`${serverUrl}/subjects/getpoint?pointid=` + urlParams.get('pointid'), {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
+		const data = await fetch(
+			`${serverUrl}/subjects/getpoint?pointid=` +
+				urlParams.get('pointid'),
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}
+		);
 		const responseData = await data.json();
 		setPoint(responseData);
 		setLoading1(false);
@@ -45,11 +50,15 @@ const Point = () => {
 
 	const getPointRevision = async () => {
 		const token = await getAccessTokenSilently();
-		const data = await fetch(`${serverUrl}/subjects/getpointrevision?pointid=` + urlParams.get('pointid'), {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
+		const data = await fetch(
+			`${serverUrl}/subjects/getpointrevision?pointid=` +
+				urlParams.get('pointid'),
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}
+		);
 		const responseData = await data.json();
 		await responseData.sort((a, b) => {
 			return new Date(b.datetime) - new Date(a.datetime);
@@ -63,15 +72,19 @@ const Point = () => {
 
 	const getUserNotes = async () => {
 		const token = await getAccessTokenSilently();
-		const data = await fetch(`${serverUrl}/usercontent/getusernotepoint?pointid=` + urlParams.get('pointid'), {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
+		const data = await fetch(
+			`${serverUrl}/usercontent/getusernotepoint?pointid=` +
+				urlParams.get('pointid'),
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}
+		);
 		const responseData = await data.json();
 		setStudentNotes(responseData);
 		setLoading3(false);
-	}
+	};
 
 	const getDates = (point) => {
 		let dates = [];
@@ -107,24 +120,47 @@ const Point = () => {
 		return (
 			<ViewWrapper>
 				<Grid container spacing={3}>
-				<GridItem md={6} xs={12}>
-					<ContentCard>
-						<Typography variant="h2" align="center">
-							{point[0].topics.name}
-						</Typography>
-						<Divider />
-						<Typography variant="h4" align="center">
-							{point[0].name}
-						</Typography>
-					</ContentCard>
-				</GridItem>
-				{getRevisionPoint()}
-				<GridItem lg={12} md={12} xs={12}>
-					<DisplayStudentNotes notes={studentNotes} />
-				</GridItem>
-				<GridItem lg={12} md={12} xs={12}>
-					<ContentNotes />
-				</GridItem>
+					<GridItem md={6} xs={12}>
+						<ContentCard>
+							<Typography variant="h2" align="center">
+								{point[0].topics.name}
+							</Typography>
+							<Divider />
+							<Typography variant="h4" align="center">
+								{point[0].name}
+							</Typography>
+						</ContentCard>
+					</GridItem>
+					{getRevisionPoint()}
+					<GridItem lg={12} md={12} xs={12}>
+						<ContentCard>
+							<div
+								style={{
+									display: 'flex',
+									justifyContent: 'center',
+									width: '100%',
+								}}
+							>
+								<div
+									style={{
+										width: '100%',
+										maxWidth: 600,
+									}}
+								>
+									<YouTube
+										videoId={'XUKbq_LElT0'}
+										opts={{ width: '100%' }}
+									/>
+								</div>
+							</div>
+						</ContentCard>
+					</GridItem>
+					<GridItem lg={12} md={12} xs={12}>
+						<DisplayStudentNotes notes={studentNotes} />
+					</GridItem>
+					<GridItem lg={12} md={12} xs={12}>
+						<ContentNotes />
+					</GridItem>
 				</Grid>
 			</ViewWrapper>
 		);
