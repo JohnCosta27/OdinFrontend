@@ -3,6 +3,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { makeStyles } from '@material-ui/core/styles';
 import Gallery from 'react-grid-gallery';
 import ContentCard from './ContentCard';
+import { Typography } from '@material-ui/core';
 const ContentNotes = () => {
 	const [notes, setNotes] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -52,7 +53,7 @@ const ContentNotes = () => {
 				src: `https://sbogvmcjtjrgffqnydly.supabase.co/storage/v1/object/public/notes/${note.noteid}`,
 				thumbnail: `https://sbogvmcjtjrgffqnydly.supabase.co/storage/v1/object/public/notes/${note.noteid}`,
 				thumbnailWidth: note.notes.width,
-				thumbnailHeight: note.notes.height
+				thumbnailHeight: note.notes.height,
 			});
 		}
 		setNotes(noteData);
@@ -66,7 +67,14 @@ const ContentNotes = () => {
 	} else {
 		return (
 			<ContentCard>
-				<Gallery images={notes} enableImageSelection={false} rowHeight={300}/>
+				<Typography variant="h2" align="center">
+					Revision Material
+				</Typography>
+				<Gallery
+					images={notes}
+					enableImageSelection={false}
+					rowHeight={300}
+				/>
 			</ContentCard>
 		);
 	}

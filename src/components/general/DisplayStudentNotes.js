@@ -21,11 +21,14 @@ const DisplayStudentNotes = (props) => {
 	}));
 
 	const classes = useStyles();
-    console.log(props.notes);
 
 	return (
 		<div className={classes.flexWrapper}>
-			<Paper elevation={4} className={classes.paper} style={{ width: 400 }}>
+			<Paper
+				elevation={4}
+				className={classes.paper}
+				style={{ width: 400 }}
+			>
 				<Typography variant="h2" color="initial" align="center">
 					Notes
 				</Typography>
@@ -34,10 +37,18 @@ const DisplayStudentNotes = (props) => {
 				{props.notes.map((note) => (
 					<Grid item xs className={classes.paper}>
 						<Paper elevation={4} className={classes.paper}>
-							<Typography variant="h3" color="initial" align="center">
+							<Typography
+								variant="h3"
+								color="initial"
+								align="center"
+							>
 								{note.title}
 							</Typography>
-                            <Typography variant="h3" color="initial" align="left">
+							<Typography
+								variant="h3"
+								color="initial"
+								align="left"
+							>
 								{note.content}
 							</Typography>
 						</Paper>

@@ -11,7 +11,6 @@ import ContentCard from './ContentCard';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 
-
 const FileUpload = () => {
 	const serverUrl = process.env.REACT_APP_SERVER_URL;
 	const { getAccessTokenSilently } = useAuth0();
@@ -42,8 +41,8 @@ const FileUpload = () => {
 	};
 
 	return (
-		<ContentCard>
-			<Typography variant="h2" align="center">
+		<div>
+			<Typography variant="h4" align="center">
 				Upload Note
 			</Typography>
 
@@ -63,15 +62,12 @@ const FileUpload = () => {
 				>
 					Choose Files
 				</Button>
-				<Button variant="text" color="default" onClick={() => test()}>
-				  Testing
-				</Button>
 			</label>
 
 			<Button variant="text" color="secondary" onClick={handleSubmission}>
 				Submit
 			</Button>
-		</ContentCard>
+		</div>
 	);
 };
 export default FileUpload;
